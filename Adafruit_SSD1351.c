@@ -16,6 +16,10 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
+
+#include "Adafruit_GFX.h"
+#include "Adafruit_SSD1351.h"
+#include "glcdfont.c"
 #include <stdbool.h>
 #include <stdint.h>
 #include "inc/hw_memmap.h"
@@ -26,9 +30,7 @@
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
 #include "driverlib/rom.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_SSD1351.h"
-#include "glcdfont.c"
+
 //#ifdef __AVR__
   //  #include <avr/pgmspace.h>
 //#endif
@@ -39,6 +41,9 @@
 //#ifndef _BV
 //    #define _BV(bit) (1<<(bit))
 //#endif
+
+#define WIDTH 128
+#define HEIGHT 128
 
 const uint32_t portA = GPIO_PORTA_BASE;
 const uint32_t portB = GPIO_PORTB_BASE;
@@ -51,6 +56,13 @@ const uint8_t si = GPIO_PIN_5;
 //Port B pins (GPIO)
 const uint8_t rst = GPIO_PIN_5;
 const uint8_t dc = GPIO_PIN_6;
+
+uint16_t swap1 (uint16_t a, uint16_t b) { 
+	uint16_t t = a; 
+	a = b; 
+	b = t; 
+	return t;
+}
 
 /********************************** low level pin interface */
 //Adafruit_SSD1351::
@@ -195,10 +207,6 @@ uint16_t Color565(uint8_t r, uint8_t g, uint8_t b) {
   return c;
 }
 
-void fillScreen(uint16_t fillcolor) {
-  fillRect(0, 0, SSD1351WIDTH, SSD1351HEIGHT, fillcolor);
-}
-
 // Draw a filled rectangle with no rotation.
 void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor) {
   // Bounds check
@@ -245,14 +253,14 @@ void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillco
     @brief  Draws a filled rectangle using HW acceleration
 */
 /**************************************************************************/
-void fillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor) {
+void fillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor) { //Remove from GFX
   // Transform x and y based on current rotation.
   switch (getRotation()) {
   case 0:  // No rotation
     rawFillRect(x, y, w, h, fillcolor);
     break;
   case 1:  // Rotated 90 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     x = WIDTH - x - h;
     rawFillRect(x, y, h, w, fillcolor);
     break;
@@ -262,11 +270,15 @@ void fillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor
     rawFillRect(x, y, w, h, fillcolor);
     break;
   case 3:  // Rotated 270 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     y = HEIGHT - y - w;
     rawFillRect(x, y, h, w, fillcolor);
     break;
   }
+}
+
+void fillScreen(uint16_t fillcolor) {
+  fillRect(0, 0, SSD1351WIDTH, SSD1351HEIGHT, fillcolor);
 }
 
 // Draw a horizontal line ignoring any screen rotation.
@@ -336,7 +348,7 @@ void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
     rawFastVLine(x, y, h, color);
     break;
   case 1:  // Rotated 90 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     x = WIDTH - x - h;
     rawFastHLine(x, y, h, color);
     break;
@@ -346,7 +358,7 @@ void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
     rawFastVLine(x, y, h, color);
     break;
   case 3:  // Rotated 270 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     y = HEIGHT - y - 1;
     rawFastHLine(x, y, h, color);
     break;
@@ -360,7 +372,7 @@ void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
     rawFastHLine(x, y, w, color);
     break;
   case 1:  // Rotated 90 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     x = WIDTH - x - 1;
     rawFastVLine(x, y, w, color);
     break;
@@ -370,7 +382,7 @@ void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
     rawFastHLine(x, y, w, color);
     break;
   case 3:  // Rotated 270 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     y = HEIGHT - y - w;
     rawFastVLine(x, y, w, color);
     break;
@@ -383,7 +395,7 @@ void drawPixel(int16_t x, int16_t y, uint16_t color)
   switch (getRotation()) {
   // Case 0: No rotation
   case 1:  // Rotated 90 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     x = WIDTH - x - 1;
     break;
   case 2:  // Rotated 180 degrees clockwise.
@@ -391,7 +403,7 @@ void drawPixel(int16_t x, int16_t y, uint16_t color)
     y = HEIGHT - y - 1;
     break;
   case 3:  // Rotated 270 degrees clockwise.
-    swap(x, y);
+    swap1(x, y);
     y = HEIGHT - y - 1;
     break;
   }
@@ -411,7 +423,7 @@ void drawPixel(int16_t x, int16_t y, uint16_t color)
   //spiwrite(color >> 8);    
   //spiwrite(color);
   SSIDataPut(SSI0_BASE, color >> 8);
-  SSIDataPut(SSIO_BASE,color);
+  SSIDataPut(SSI0_BASE,color);
 
   //*csport |= cspinmask;
   ROM_GPIOPinWrite(portA, oc, 1);
@@ -439,11 +451,11 @@ void begin(void) { //FIX THIS
     //if (ROM_GPIOPinRead(portB, rst))                  //if(_rst) { 
     //{
     ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
-    delay(500);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
     ROM_GPIOPinWrite(portB, rst, 0x00);           //digitalWrite(_rst, LOW);
-    delay(500);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
     ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
-    delay(500);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
     //}
 
     // Initialization Sequence
@@ -518,7 +530,7 @@ void begin(void) { //FIX THIS
     writeCommand(SSD1351_CMD_DISPLAYON);		//--turn on oled panel    
 }
 
-void invert(boolean v) {
+void invert(bool v) {
    if (v) {
      writeCommand(SSD1351_CMD_INVERTDISPLAY);
    } else {

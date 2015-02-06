@@ -19,7 +19,7 @@
 #define SSD1351WIDTH 128
 #define SSD1351HEIGHT 128  // SET THIS TO 96 FOR 1.27"!
 
-#define swap(a, b) { uint16_t t = a; a = b; b = t; }
+//#define swap(a, b) { uint16_t t = a; a = b; b = t; }
 
 /*#if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
@@ -80,6 +80,10 @@
 #define SSD1351_CMD_STOPSCROLL          0x9E
 #define SSD1351_CMD_STARTSCROLL         0x9F
 
+#include <stdbool.h>
+
+uint16_t swap1 (uint16_t a, uint16_t b);
+
 
 /*class Adafruit_SSD1351  : public virtual Adafruit_GFX {
  public:*/
@@ -95,7 +99,7 @@
   void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
   void fillScreen(uint16_t fillcolor);
 
-  void invert(boolean);
+  void invert(bool v);
   // commands
   void begin(void);
   void goTo(int x, int y);
