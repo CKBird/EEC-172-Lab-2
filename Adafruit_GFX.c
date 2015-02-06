@@ -61,8 +61,7 @@ POSSIBILITY OF SUCH DAMAGE.
 }*/
 
 // Draw a circle outline
-void drawCircle(int16_t x0, int16_t y0, int16_t r,
-    uint16_t color) {
+void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   int16_t f = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -95,8 +94,7 @@ void drawCircle(int16_t x0, int16_t y0, int16_t r,
   }
 }
 
-void drawCircleHelper( int16_t x0, int16_t y0,
-               int16_t r, uint8_t cornername, uint16_t color) {
+void drawCircleHelper( int16_t x0, int16_t y0, int16_t r, uint8_t cornername, uint16_t color) {
   int16_t f     = 1 - r;
   int16_t ddF_x = 1;
   int16_t ddF_y = -2 * r;
@@ -131,15 +129,13 @@ void drawCircleHelper( int16_t x0, int16_t y0,
   }
 }
 
-void fillCircle(int16_t x0, int16_t y0, int16_t r,
-			      uint16_t color) {
+void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
   drawFastVLine(x0, y0-r, 2*r+1, color);
   fillCircleHelper(x0, y0, r, 3, 0, color);
 }
 
 // Used to do circles and roundrects
-void fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
-    uint8_t cornername, int16_t delta, uint16_t color) {
+void fillCircleHelper(int16_t x0, int16_t y0, int16_t r, uint8_t cornername, int16_t delta, uint16_t color) {
 
   int16_t f     = 1 - r;
   int16_t ddF_x = 1;
@@ -169,9 +165,7 @@ void fillCircleHelper(int16_t x0, int16_t y0, int16_t r,
 }
 
 // Bresenham's algorithm - thx wikpedia
-void drawLine(int16_t x0, int16_t y0,
-			    int16_t x1, int16_t y1,
-			    uint16_t color) {
+void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color) {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
     swap(x0, y0);
@@ -211,29 +205,24 @@ void drawLine(int16_t x0, int16_t y0,
 }
 
 // Draw a rectangle
-void drawRect(int16_t x, int16_t y,
-			    int16_t w, int16_t h,
-			    uint16_t color) {
+void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
   drawFastHLine(x, y, w, color);
   drawFastHLine(x, y+h-1, w, color);
   drawFastVLine(x, y, h, color);
   drawFastVLine(x+w-1, y, h, color);
 }
 
-void drawFastVLine(int16_t x, int16_t y,
-				 int16_t h, uint16_t color) {
+void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x, y+h-1, color);
 }
 
-void drawFastHLine(int16_t x, int16_t y,
-				 int16_t w, uint16_t color) {
+void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x+w-1, y, color);
 }
 
-void fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
-			    uint16_t color) {
+void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     drawFastVLine(i, y, h, color);
@@ -245,8 +234,7 @@ void fillScreen(uint16_t color) {
 }
 
 // Draw a rounded rectangle
-void drawRoundRect(int16_t x, int16_t y, int16_t w,
-  int16_t h, int16_t r, uint16_t color) {
+void drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color) {
   // smarter version
   drawFastHLine(x+r  , y    , w-2*r, color); // Top
   drawFastHLine(x+r  , y+h-1, w-2*r, color); // Bottom
@@ -260,8 +248,7 @@ void drawRoundRect(int16_t x, int16_t y, int16_t w,
 }
 
 // Fill a rounded rectangle
-void fillRoundRect(int16_t x, int16_t y, int16_t w,
-				 int16_t h, int16_t r, uint16_t color) {
+void fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color) {
   // smarter version
   fillRect(x+r, y, w-2*r, h, color);
 
@@ -271,18 +258,14 @@ void fillRoundRect(int16_t x, int16_t y, int16_t w,
 }
 
 // Draw a triangle
-void drawTriangle(int16_t x0, int16_t y0,
-				int16_t x1, int16_t y1,
-				int16_t x2, int16_t y2, uint16_t color) {
+void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color) {
   drawLine(x0, y0, x1, y1, color);
   drawLine(x1, y1, x2, y2, color);
   drawLine(x2, y2, x0, y0, color);
 }
 
 // Fill a triangle
-void fillTriangle ( int16_t x0, int16_t y0,
-				  int16_t x1, int16_t y1,
-				  int16_t x2, int16_t y2, uint16_t color) {
+void fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color) {
 
   int16_t a, b, y, last;
 
@@ -358,9 +341,7 @@ void fillTriangle ( int16_t x0, int16_t y0,
   }
 }
 
-void drawBitmap(int16_t x, int16_t y,
-			      const uint8_t *bitmap, int16_t w, int16_t h,
-			      uint16_t color) {
+void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
 
@@ -376,9 +357,7 @@ void drawBitmap(int16_t x, int16_t y,
 // Draw a 1-bit color bitmap at the specified x, y position from the
 // provided bitmap buffer (must be PROGMEM memory) using color as the
 // foreground color and bg as the background color.
-void drawBitmap(int16_t x, int16_t y,
-            const uint8_t *bitmap, int16_t w, int16_t h,
-            uint16_t color, uint16_t bg) {
+void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, uint16_t bg) {
 
   int16_t i, j, byteWidth = (w + 7) / 8;
   
@@ -397,9 +376,7 @@ void drawBitmap(int16_t x, int16_t y,
 //Draw XBitMap Files (*.xbm), exported from GIMP,
 //Usage: Export from GIMP to *.xbm, rename *.xbm to *.c and open in editor.
 //C Array can be directly used with this function
-void drawXBitmap(int16_t x, int16_t y,
-                              const uint8_t *bitmap, int16_t w, int16_t h,
-                              uint16_t color) {
+void drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) {
   
   int16_t i, j, byteWidth = (w + 7) / 8;
   
@@ -437,8 +414,7 @@ void drawXBitmap(int16_t x, int16_t y,
 }*/
 
 // Draw a character
-void drawChar(int16_t x, int16_t y, unsigned char c,
-			    uint16_t color, uint16_t bg, uint8_t size) {
+void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size) {
 
   if((x >= _width)            || // Clip right
      (y >= _height)           || // Clip bottom
