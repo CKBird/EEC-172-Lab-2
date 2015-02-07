@@ -12,3 +12,4 @@
 .\rvmdk\adafruit_gfx.o: C:\ti\TivaWare_C_Series-1.1\driverlib/rom.h
 .\rvmdk\adafruit_gfx.o: Adafruit_GFX.h
 .\rvmdk\adafruit_gfx.o: glcdfont.c
+.\rvmdk\adafruit_gfx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

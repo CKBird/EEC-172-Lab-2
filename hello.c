@@ -1,18 +1,3 @@
-//FROM ADAFRUIT GFX
-/*Adafruit_GFX::Adafruit_GFX(int16_t w, int16_t h):
-  WIDTH(w), HEIGHT(h)
-{
-  _width    = WIDTH;
-  _height   = HEIGHT;
-  rotation  = 0;
-  cursor_y  = cursor_x    = 0;
-  textsize  = 1;
-  textcolor = textbgcolor = 0xFFFF;
-  wrap      = true;
-}*/
-
-
-
 //Standard Includes
 #include <stdbool.h>
 #include <stdint.h>
@@ -27,7 +12,7 @@
 
 //Extra Includes for OLED
 #include "Adafruit_SSD1351.h"
-#include "Adafruit_GFX.h"
+//#include "Adafruit_GFX.h"
 
 //# of bites to send and rec
 #define NUM_SSI_DATA            3
@@ -41,6 +26,11 @@
 #define MAGENTA         0xF81F
 #define YELLOW          0xFFE0  
 #define WHITE           0xFFFF
+
+float p = 3.14159;
+//#define WIDTH 128
+//#define HEIGHT 128
+
 
 void InitConsole(void)// Same as ConfigureUART()
 {
@@ -70,33 +60,11 @@ void ConfigureSSI (void) {
 	ROM_GPIOPinTypeSSI(GPIO_PORTA_BASE, GPIO_PIN_5 | GPIO_PIN_4 | GPIO_PIN_3 | GPIO_PIN_2);
 
 	//Set to master mode (SPI), 8 bit data
-	ROM_SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_2 | SSI_MODE_MASTER, 1000000, 8);
+	ROM_SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_2, SSI_MODE_MASTER, 1000000, 8);
 
 	//Enable SSI
 	ROM_SSIEnable(SSI0_BASE);
 
-}
-
-int main (void) {
-	uint32_t pui32DataTx[NUM_SSI_DATA];
-	uint32_t pui32DataRx[NUM_SSI_DATA];
-	uint32_t ui32Index;
-
-	ROM_SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
- 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
-	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5);        	//pinMode(_rst, OUTPUT);
-	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
-
-	InitConsole();
-	ConfigureSSI();
-	begin();
-	float p = 3.1415926;
-	while(1)
-	{
-		if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
-			begin();
-		setup();
-	}
 }
 
 void fillpixelbypixel(uint16_t color) 
@@ -108,82 +76,9 @@ void fillpixelbypixel(uint16_t color)
 		drawPixel(x, y, color);
 		}
 	}
-  delay(100);
+  ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
 }
 
-void setup(void) {
-  UARTprintf("hello!\n");
-  begin();
-
-  UARTprintf("init\n");
-
-  // You can optionally rotate the display by running the line below.
-  // Note that a value of 0 means no rotation, 1 means 90 clockwise,
-  // 2 means 180 degrees clockwise, and 3 means 270 degrees clockwise.
-  //setRotation(1);
-  // NOTE: The test pattern at the start will NOT be rotated!  The code
-  // for rendering the test pattern talks directly to the display and
-  // ignores any rotation.
-
-  uint16_t time = millis();
-  fillRect(0, 0, 128, 128, BLACK);
-  time = millis() - time;
-  
-  UARTprintf(time, %d);
-  delay(500);
-  
-  lcdTestPattern();
-  delay(500);
-  
-  invert(true);
-  delay(100);
-  invert(false);
-  delay(100);
-
-  fillScreen(BLACK);
-  testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", WHITE);
-  delay(500);
-
-  // tft print function!
-  tftPrintTest();
-  delay(500);
-  
-  //a single pixel
-  drawPixel(width()/2, height()/2, GREEN);
-  delay(500);
-
-  // line draw test
-  testlines(YELLOW);
-  delay(500);    
- 
-  // optimized lines
-  testfastlines(RED, BLUE);
-  delay(500);    
-
-
-  testdrawrects(GREEN);
-  delay(1000);
-
-  testfillrects(YELLOW, MAGENTA);
-  delay(1000);
-
-  fillScreen(BLACK);
-  testfillcircles(10, BLUE);
-  testdrawcircles(10, WHITE);
-  delay(1000);
-   
-  testroundrects();
-  delay(500);
-  
-  testtriangles();
-  delay(500);
-  
-  UARTprintf("done\n");
-  delay(1000);
-}
-
-void loop() {
-}
 
 void testlines(uint16_t color) {
    fillScreen(BLACK);
@@ -223,7 +118,7 @@ void testlines(uint16_t color) {
 void testdrawtext(char *text, uint16_t color) {
   setCursor(0,0);
   setTextColor(color);
-  print(text);
+  UARTprintf(text);
 }
 
 void testfastlines(uint16_t color1, uint16_t color2) {
@@ -299,23 +194,26 @@ void testroundrects() {
     w-=4;
     h-=6;
     color+=1100;
-    UARTprintf(%d, i);
+    UARTprintf("%d", i);
   }
 }
+
+//Own function for first two checkoffs
+
 
 void tftPrintTest() {
   fillScreen(BLACK);
   setCursor(0, 5);
   setTextColor(RED);  
   setTextSize(1);
-  println("Hello World!");
+  UARTprintf("Hello World!");
   setTextColor(YELLOW);
   setTextSize(2);
   println("Hello World!");
   setTextColor(BLUE);
   setTextSize(3);
   print(1234.567);
-  delay(1500);
+  ROM_SysCtlDelay(SysCtlClockGet()/2); //delay(1500);
   setCursor(0, 5);
   fillScreen(BLACK);
   setTextColor(WHITE);
@@ -326,14 +224,14 @@ void tftPrintTest() {
   print(p, 6);
   println(" Want pi?");
   println(" ");
-  print(8675309, HEX); // print 8,675,309 out in HEX!
+  println("845FED"); // print 8,675,309 out in HEX!
   println(" Print HEX!");
   println(" ");
   setTextColor(WHITE);
   println("Sketch has been");
   println("running for: ");
   setTextColor(MAGENTA);
-  print(millis() / 1000);
+  //print(millis() / 1000);
   setTextColor(WHITE);
   print(" seconds.");
 }
@@ -343,15 +241,15 @@ void mediabuttons() {
   fillScreen(BLACK);
   fillRoundRect(25, 10, 78, 60, 8, WHITE);
   fillTriangle(42, 20, 42, 60, 90, 40, RED);
-  delay(500);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   // pause
   fillRoundRect(25, 90, 78, 60, 8, WHITE);
   fillRoundRect(39, 98, 20, 45, 5, GREEN);
   fillRoundRect(69, 98, 20, 45, 5, GREEN);
-  delay(500);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   // play color
   fillTriangle(42, 20, 42, 60, 90, 40, BLUE);
-  delay(50);
+  ROM_SysCtlDelay(SysCtlClockGet()/60); //delay(50);
   // pause color
   fillRoundRect(39, 98, 20, 45, 5, RED);
   fillRoundRect(69, 98, 20, 45, 5, RED);
@@ -390,4 +288,100 @@ void lcdTestPattern(void)
        }
     }
   }
+}
+
+void setup(void) {
+  UARTprintf("hello!\n");
+  begin();
+
+  UARTprintf("init\n");
+
+  // You can optionally rotate the display by running the line below.
+  // Note that a value of 0 means no rotation, 1 means 90 clockwise,
+  // 2 means 180 degrees clockwise, and 3 means 270 degrees clockwise.
+  //setRotation(1);
+  // NOTE: The test pattern at the start will NOT be rotated!  The code
+  // for rendering the test pattern talks directly to the display and
+  // ignores any rotation.
+
+  //uint16_t time = 111;
+  fillRect(0, 0, 128, 128, BLACK);
+  //time = millis() - time;
+  
+  //UARTprintf(time, %d);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  
+  lcdTestPattern();
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  
+  invert(true);
+  ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
+  invert(false);
+  ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
+
+  fillScreen(BLACK);
+  testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", WHITE);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+
+  // tft print function!
+  tftPrintTest();
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  
+  //a single pixel
+  drawPixel(width()/2, height()/2, GREEN);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+
+  // line draw test
+  testlines(YELLOW);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
+ 
+  // optimized lines
+  testfastlines(RED, BLUE);
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
+
+
+  testdrawrects(GREEN);
+  ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
+
+  testfillrects(YELLOW, MAGENTA);
+  ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
+
+  fillScreen(BLACK);
+  testfillcircles(10, BLUE);
+  testdrawcircles(10, WHITE);
+  ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
+   
+  testroundrects();
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  
+  testtriangles();
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  
+  UARTprintf("done\n");
+  ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
+}
+
+void loop() {
+}
+
+int main (void) {
+	uint32_t pui32DataTx[NUM_SSI_DATA];
+	uint32_t pui32DataRx[NUM_SSI_DATA];
+	uint32_t ui32Index;
+
+	ROM_SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+ 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
+	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5);        	//pinMode(_rst, OUTPUT);
+	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
+
+	InitConsole();
+	ConfigureSSI();
+	begin();
+	//float p = 3.1415926;
+	while(1)
+	{
+		if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
+			begin();
+		setup();
+	}
 }

@@ -1,35 +1,4 @@
-/*
-This is the core graphics library for all our displays, providing a common
-set of graphics primitives (points, lines, circles, etc.).  It needs to be
-paired with a hardware-specific library for each display device we carry
-(to handle the lower-level functions).
 
-Adafruit invests time and resources providing this open source code, please
-support Adafruit & open-source hardware by purchasing products from Adafruit!
- 
-Copyright (c) 2013 Adafruit Industries.  All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-- Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-- Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-*/
 #include <stdbool.h>
 #include <stdint.h>
 #include "inc/hw_memmap.h"
@@ -42,23 +11,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "driverlib/rom.h"
 #include "Adafruit_GFX.h"
 #include "glcdfont.c"
-#ifdef __AVR__
- #include <avr/pgmspace.h>
-#else
- #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
-#endif
-
-/*Adafruit_GFX::Adafruit_GFX(int16_t w, int16_t h):
-  WIDTH(w), HEIGHT(h)
-{
-  _width    = WIDTH;
-  _height   = HEIGHT;
-  rotation  = 0;
-  cursor_y  = cursor_x    = 0;
-  textsize  = 1;
-  textcolor = textbgcolor = 0xFFFF;
-  wrap      = true;
-}*/
+#include "math.h" 
 
 // Draw a circle outline
 void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
@@ -212,7 +165,7 @@ void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
   drawFastVLine(x+w-1, y, h, color);
 }
 
-void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
+/*void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x, y+h-1, color);
 }
@@ -221,7 +174,7 @@ void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
   // Update in subclasses if desired!
   drawLine(x, y, x+w-1, y, color);
 }
-
+*/
 void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
@@ -301,12 +254,6 @@ void fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, 
     sa   = 0,
     sb   = 0;
 
-  // For upper part of triangle, find scanline crossings for segments
-  // 0-1 and 0-2.  If y1=y2 (flat-bottomed triangle), the scanline y1
-  // is included here (and second loop will be skipped, avoiding a /0
-  // error there), otherwise scanline y1 is skipped here and handled
-  // in the second loop...which also avoids a /0 error here if y0=y1
-  // (flat-topped triangle).
   if(y1 == y2) last = y1;   // Include y1 scanline
   else         last = y1-1; // Skip it
 
@@ -341,37 +288,6 @@ void fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, 
   }
 }
 
-void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) {
-
-  int16_t i, j, byteWidth = (w + 7) / 8;
-
-  for(j=0; j<h; j++) {
-    for(i=0; i<w; i++ ) {
-      if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (128 >> (i & 7))) {
-        drawPixel(x+i, y+j, color);
-      }
-    }
-  }
-}
-
-// Draw a 1-bit color bitmap at the specified x, y position from the
-// provided bitmap buffer (must be PROGMEM memory) using color as the
-// foreground color and bg as the background color.
-void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, uint16_t bg) {
-
-  int16_t i, j, byteWidth = (w + 7) / 8;
-  
-  for(j=0; j<h; j++) {
-    for(i=0; i<w; i++ ) {
-      if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (128 >> (i & 7))) {
-        drawPixel(x+i, y+j, color);
-      }
-      else {
-      	drawPixel(x+i, y+j, bg);
-      }
-    }
-  }
-}
 
 //Draw XBitMap Files (*.xbm), exported from GIMP,
 //Usage: Export from GIMP to *.xbm, rename *.xbm to *.c and open in editor.
@@ -389,30 +305,6 @@ void drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t
   }
 }
 
-/* THIS MAY ACTUALLY BE IMPORTANT NOT SURE
-//#if ARDUINO >= 100
-//size_t Adafruit_GFX::write(uint8_t c) {
-//#else
-//void write(uint8_t c) {
-//#endif
-  if (c == '\n') {
-    cursor_y += textsize*8;
-    cursor_x  = 0;
-  } else if (c == '\r') {
-    // skip em
-  } else {
-    drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize);
-    cursor_x += textsize*6;
-    if (wrap && (cursor_x > (_width - textsize*6))) {
-      cursor_y += textsize*8;
-      cursor_x = 0;
-    }
-  }
-#if ARDUINO >= 100
-  return 1;
-#endif
-}*/
-
 // Draw a character
 void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size) {
 
@@ -427,7 +319,7 @@ void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg
     if (i == 5) 
       line = 0x0;
     else 
-      line = pgm_read_byte(font+(c*5)+i);
+      line = font[(c*5)+i];
     for (int8_t j = 0; j<8; j++) {
       if (line & 0x1) {
         if (size == 1) // default size
@@ -462,16 +354,16 @@ void setTextColor(uint16_t c) {
   textcolor = textbgcolor = c;
 }
 
-void setTextColor(uint16_t c, uint16_t b) {
+/*void setTextColor(uint16_t c, uint16_t b) {
   textcolor   = c;
   textbgcolor = b; 
-}
+}*/
 
-void setTextWrap(boolean w) {
+void setTextWrap(bool w) {
   wrap = w;
 }
 
-uint8_t getRotation(void) const {
+uint8_t getRotation(void){
   return rotation;
 }
 
@@ -492,27 +384,412 @@ void setRotation(uint8_t x) {
 }
 
 // Return the size of the display (per current rotation)
-int16_t width(void) const {
+int16_t width(void){
   return _width;
 }
  
-int16_t height(void) const {
+int16_t height(void){
   return _height;
 }
 
-void invertDisplay(boolean i) {
+//void invertDisplay(boolean i) {
   // Do nothing, must be subclassed if supported
+//}
+
+#include "Adafruit_GFX.h"
+#include "Adafruit_SSD1351.h"
+#include "glcdfont.c"
+#include <stdbool.h>
+#include <stdint.h>
+#include "inc/hw_memmap.h"
+#include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/ssi.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/uart.h"
+#include "utils/uartstdio.h"
+#include "driverlib/rom.h"
+
+const uint32_t portA = GPIO_PORTA_BASE;
+const uint32_t portB = GPIO_PORTB_BASE;
+
+//Port A pins (SSI)
+const uint8_t cl = GPIO_PIN_2;
+const uint8_t oc = GPIO_PIN_3;
+const uint8_t si = GPIO_PIN_5;
+
+//Port B pins (GPIO)
+const uint8_t rst = GPIO_PIN_5;
+const uint8_t dc = GPIO_PIN_6;
+
+uint16_t swap1 (uint16_t a, uint16_t b) { 
+  uint16_t t = a; 
+  a = b; 
+  b = t; 
+  return t;
 }
 
 
+void writeCommand(uint8_t c) {
+
+  //DC low to indicate command, then enable MCU communication
+  ROM_GPIOPinWrite (portB, dc, 0x00); 
+  ROM_GPIOPinWrite (portA, oc, 0x00);  
+
+  //Imitate spiwrite
+  SSIDataPut(SSI0_BASE, c);
+
+  //Disable MCU communication
+  ROM_GPIOPinWrite (portA, oc, 0x08);
+}
 
 
+void writeData(uint8_t c) {
+    //DC low to indicate command, then enable MCU communication
+  ROM_GPIOPinWrite (portB, dc, 0x40); 
+  ROM_GPIOPinWrite (portA, oc, 0x00);  
+
+  //Imitate spiwrite
+  SSIDataPut(SSI0_BASE, c);
+
+  //Disable MCU communication
+  ROM_GPIOPinWrite (portA, oc, 0x08);
+} 
+
+/***********************************/
+
+void goTo(int x, int y) {
+  if ((x >= SSD1351WIDTH) || (y >= SSD1351HEIGHT)) return;
+  
+  // set x and y coordinate
+  writeCommand(SSD1351_CMD_SETCOLUMN);
+  writeData(x);
+  writeData(SSD1351WIDTH-1);
+
+  writeCommand(SSD1351_CMD_SETROW);
+  writeData(y);
+  writeData(SSD1351HEIGHT-1);
+
+  writeCommand(SSD1351_CMD_WRITERAM);  
+}
+
+uint16_t Color565(uint8_t r, uint8_t g, uint8_t b) {
+  uint16_t c;
+  c = r >> 3;
+  c <<= 6;
+  c |= g >> 2;
+  c <<= 5;
+  c |= b >> 3;
+
+  return c;
+}
+
+// Draw a filled rectangle with no rotation.
+void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor) {
+  // Bounds check
+  if ((x >= SSD1351WIDTH) || (y >= SSD1351HEIGHT))
+    return;
+
+  // Y bounds check
+  if (y+h > SSD1351HEIGHT)
+  {
+    h = SSD1351HEIGHT - y - 1;
+  }
+
+  // X bounds check
+  if (x+w > SSD1351WIDTH)
+  {
+    w = SSD1351WIDTH - x - 1;
+  }
+  
+  // set location
+  writeCommand(SSD1351_CMD_SETCOLUMN);
+  writeData(x);
+  writeData(x+w-1);
+  writeCommand(SSD1351_CMD_SETROW);
+  writeData(y);
+  writeData(y+h-1);
+  // fill!
+  writeCommand(SSD1351_CMD_WRITERAM);  
+
+  for (uint16_t i=0; i < w*h; i++) {
+    writeData(fillcolor >> 8);
+    writeData(fillcolor);
+  }
+}
+
+/**************************************************************************/
+/*!
+    @brief  Draws a filled rectangle using HW acceleration
+*/
+/**************************************************************************/
+void fillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor) { //Remove from GFX
+  // Transform x and y based on current rotation.
+  switch (getRotation()) {
+  case 0:  // No rotation
+    rawFillRect(x, y, w, h, fillcolor);
+    break;
+  case 1:  // Rotated 90 degrees clockwise.
+    swap1(x, y);
+    x = WIDTH - x - h;
+    rawFillRect(x, y, h, w, fillcolor);
+    break;
+  case 2:  // Rotated 180 degrees clockwise.
+    x = WIDTH - x - w;
+    y = HEIGHT - y - h;
+    rawFillRect(x, y, w, h, fillcolor);
+    break;
+  case 3:  // Rotated 270 degrees clockwise.
+    swap1(x, y);
+    y = HEIGHT - y - w;
+    rawFillRect(x, y, h, w, fillcolor);
+    break;
+  }
+}
+
+void fillScreen(uint16_t fillcolor) {
+  fillRect(0, 0, SSD1351WIDTH, SSD1351HEIGHT, fillcolor);
+}
+
+// Draw a horizontal line ignoring any screen rotation.
+void rawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
+  // Bounds check
+  if ((x >= SSD1351WIDTH) || (y >= SSD1351HEIGHT))
+    return;
+
+  // X bounds check
+  if (x+w > SSD1351WIDTH)
+  {
+    w = SSD1351WIDTH - x - 1;
+  }
+
+  if (w < 0) return;
+
+  // set location
+  writeCommand(SSD1351_CMD_SETCOLUMN);
+  writeData(x);
+  writeData(x+w-1);
+  writeCommand(SSD1351_CMD_SETROW);
+  writeData(y);
+  writeData(y);
+  // fill!
+  writeCommand(SSD1351_CMD_WRITERAM);  
+
+  for (uint16_t i=0; i < w; i++) {
+    writeData(color >> 8);
+    writeData(color);
+  }
+}
+
+// Draw a vertical line ignoring any screen rotation.
+void rawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
+  // Bounds check
+  if ((x >= SSD1351WIDTH) || (y >= SSD1351HEIGHT))
+  return;
+
+  // X bounds check
+  if (y+h > SSD1351HEIGHT)
+  {
+    h = SSD1351HEIGHT - y - 1;
+  }
+
+  if (h < 0) return;
+
+  // set location
+  writeCommand(SSD1351_CMD_SETCOLUMN);
+  writeData(x);
+  writeData(x);
+  writeCommand(SSD1351_CMD_SETROW);
+  writeData(y);
+  writeData(y+h-1);
+  // fill!
+  writeCommand(SSD1351_CMD_WRITERAM);  
+
+  for (uint16_t i=0; i < h; i++) {
+    writeData(color >> 8);
+    writeData(color);
+  }
+}
+
+void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color) {
+  // Transform x and y based on current rotation.
+  switch (getRotation()) {
+  case 0:  // No rotation
+    rawFastVLine(x, y, h, color);
+    break;
+  case 1:  // Rotated 90 degrees clockwise.
+    swap1(x, y);
+    x = WIDTH - x - h;
+    rawFastHLine(x, y, h, color);
+    break;
+  case 2:  // Rotated 180 degrees clockwise.
+    x = WIDTH - x - 1;
+    y = HEIGHT - y - h;
+    rawFastVLine(x, y, h, color);
+    break;
+  case 3:  // Rotated 270 degrees clockwise.
+    swap1(x, y);
+    y = HEIGHT - y - 1;
+    rawFastHLine(x, y, h, color);
+    break;
+  }
+}
+
+void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
+  // Transform x and y based on current rotation.
+  switch (getRotation()) {
+  case 0:  // No rotation.
+    rawFastHLine(x, y, w, color);
+    break;
+  case 1:  // Rotated 90 degrees clockwise.
+    swap1(x, y);
+    x = WIDTH - x - 1;
+    rawFastVLine(x, y, w, color);
+    break;
+  case 2:  // Rotated 180 degrees clockwise.
+    x = WIDTH - x - w;
+    y = HEIGHT - y - 1;
+    rawFastHLine(x, y, w, color);
+    break;
+  case 3:  // Rotated 270 degrees clockwise.
+    swap1(x, y);
+    y = HEIGHT - y - w;
+    rawFastVLine(x, y, w, color);
+    break;
+  }
+}
+
+void drawPixel(int16_t x, int16_t y, uint16_t color)
+{
+  // Transform x and y based on current rotation.
+  switch (getRotation()) {
+  // Case 0: No rotation
+  case 1:  // Rotated 90 degrees clockwise.
+    swap1(x, y);
+    x = WIDTH - x - 1;
+    break;
+  case 2:  // Rotated 180 degrees clockwise.
+    x = WIDTH - x - 1;
+    y = HEIGHT - y - 1;
+    break;
+  case 3:  // Rotated 270 degrees clockwise.
+    swap1(x, y);
+    y = HEIGHT - y - 1;
+    break;
+  }
+
+  // Bounds check.
+  if ((x >= SSD1351WIDTH) || (y >= SSD1351HEIGHT)) return;
+  if ((x < 0) || (y < 0)) return;
+
+  goTo(x, y);
+  
+  // setup for data
+  //*rsport |= rspinmask;
+  //*csport &= ~ cspinmask; //FIx THIS
+  ROM_GPIOPinWrite(portB, dc, 1);
+  ROM_GPIOPinWrite(portA, oc, 0);
+
+  //spiwrite(color >> 8);    
+  //spiwrite(color);
+  SSIDataPut(SSI0_BASE, color >> 8);
+  SSIDataPut(SSI0_BASE,color);
+
+  //*csport |= cspinmask;
+  ROM_GPIOPinWrite(portA, oc, 1);
+}
+
+void begin(void) { //FIX THIS
+
+    ROM_GPIOPinWrite(portA, oc, 0x00);                //digitalWrite(_cs, LOW);
 
 
+    ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
+    ROM_GPIOPinWrite(portB, rst, 0x00);           //digitalWrite(_rst, LOW);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
+    ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
+    ROM_SysCtlDelay(SysCtlClockGet()/6);
+
+    // Initialization Sequence
+    writeCommand(SSD1351_CMD_COMMANDLOCK);  // set command lock
+    writeData(0x12);  
+    writeCommand(SSD1351_CMD_COMMANDLOCK);  // set command lock
+    writeData(0xB1);
+
+    writeCommand(SSD1351_CMD_DISPLAYOFF);     // 0xAE
+
+    writeCommand(SSD1351_CMD_CLOCKDIV);     // 0xB3
+    writeCommand(0xF1);             // 7:4 = Oscillator Frequency, 3:0 = CLK Div Ratio (A[3:0]+1 = 1..16)
+    
+    writeCommand(SSD1351_CMD_MUXRATIO);
+    writeData(127);
+    
+    writeCommand(SSD1351_CMD_SETREMAP);
+    writeData(0x74);
+  
+    writeCommand(SSD1351_CMD_SETCOLUMN);
+    writeData(0x00);
+    writeData(0x7F);
+    writeCommand(SSD1351_CMD_SETROW);
+    writeData(0x00);
+    writeData(0x7F);
+
+    writeCommand(SSD1351_CMD_STARTLINE);    // 0xA1
+    if (SSD1351HEIGHT == 96) {
+      writeData(96);
+    } else {
+      writeData(0);
+    }
 
 
+    writeCommand(SSD1351_CMD_DISPLAYOFFSET);  // 0xA2
+    writeData(0x0);
 
+    writeCommand(SSD1351_CMD_SETGPIO);
+    writeData(0x00);
+    
+    writeCommand(SSD1351_CMD_FUNCTIONSELECT);
+    writeData(0x01); // internal (diode drop)
+    //writeData(0x01); // external bias
 
+//    writeCommand(SSSD1351_CMD_SETPHASELENGTH);
+//    writeData(0x32);
+
+    writeCommand(SSD1351_CMD_PRECHARGE);      // 0xB1
+    writeCommand(0x32);
+ 
+    writeCommand(SSD1351_CMD_VCOMH);        // 0xBE
+    writeCommand(0x05);
+
+    writeCommand(SSD1351_CMD_NORMALDISPLAY);    // 0xA6
+
+    writeCommand(SSD1351_CMD_CONTRASTABC);
+    writeData(0xC8);
+    writeData(0x80);
+    writeData(0xC8);
+
+    writeCommand(SSD1351_CMD_CONTRASTMASTER);
+    writeData(0x0F);
+
+    writeCommand(SSD1351_CMD_SETVSL );
+    writeData(0xA0);
+    writeData(0xB5);
+    writeData(0x55);
+    
+    writeCommand(SSD1351_CMD_PRECHARGE2);
+    writeData(0x01);
+    
+    writeCommand(SSD1351_CMD_DISPLAYON);    //--turn on oled panel    
+}
+
+void invert(bool v) {
+   if (v) {
+     writeCommand(SSD1351_CMD_INVERTDISPLAY);
+   } else {
+      writeCommand(SSD1351_CMD_NORMALDISPLAY);
+   }
+ }
 
 
 

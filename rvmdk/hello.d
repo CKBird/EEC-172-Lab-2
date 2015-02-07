@@ -11,4 +11,3 @@
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\driverlib/rom.h
 .\rvmdk\hello.o: Adafruit_SSD1351.h
-.\rvmdk\hello.o: Adafruit_GFX.h

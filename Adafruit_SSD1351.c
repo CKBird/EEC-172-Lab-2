@@ -1,22 +1,3 @@
-/*************************************************** 
-  This is a library for the 1.5" & 1.27" 16-bit Color OLEDs 
-  with SSD1331 driver chip
-
-  Pick one up today in the adafruit shop!
-  ------> http://www.adafruit.com/products/1431
-  ------> http://www.adafruit.com/products/1673
-
-  These displays use SPI to communicate, 4 or 5 pins are required to  
-  interface
-  Adafruit invests time and resources providing this open source code, 
-  please support Adafruit and open-source hardware by purchasing 
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.  
-  BSD license, all text above must be included in any redistribution
- ****************************************************/
-
-
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1351.h"
 #include "glcdfont.c"
@@ -30,20 +11,6 @@
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
 #include "driverlib/rom.h"
-
-//#ifdef __AVR__
-  //  #include <avr/pgmspace.h>
-//#endif
-//#include "pins_arduino.h"
-//#include "wiring_private.h"
-//#include <SPI.h>
-
-//#ifndef _BV
-//    #define _BV(bit) (1<<(bit))
-//#endif
-
-#define WIDTH 128
-#define HEIGHT 128
 
 const uint32_t portA = GPIO_PORTA_BASE;
 const uint32_t portB = GPIO_PORTB_BASE;
@@ -64,64 +31,6 @@ uint16_t swap1 (uint16_t a, uint16_t b) {
 	return t;
 }
 
-/********************************** low level pin interface */
-//Adafruit_SSD1351::
-
-
-//Should just configure in main c file instead of here. Too many complications.
-/*void Adafruit_Configure(uint32_t portA, uint32_t portB, uint8_t oc, uint8_t dc, uint8_t si, uint8_t cl, uint8_t rst) {
-  //CSport is OC, rst and cl are reset and clock, si is sid, and dc is rsport
-   //Adafruit_GFX(SSD1351WIDTH, SSD1351HEIGHT) 
-    //Must find a way to set width and height
- //Need to configure each port and pin with ROM_GPIOwhatever  and then call this function in spi0edited
-  
-	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI0);
-	//ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA); //Already enabled by ConfigureUART()
-	
-  
-  //Enable GPIO port and set it configure it as input 
-  ROM_SysCtlPeripheralEnable(portB); //SYSCTL_PERIPH_GPIOB //Enable port
-  ROM_GPIOPinTypeGPIOOuput(portB, dc | rst); //GPIO_PORTB_BASE, GPIO_PIN_7  //Configure pin as input
-  ROM_SysCtlPeripheralEnable(portA);
-  ROM_GPIOPinTypeGPIOOutput(portA, oc | cl | si);
-}*/
-
-/* //spiwrite not used
-inline void spiwrite(uint8_t c) {
-    
-    //Serial.println(c, HEX);
-    
-    if (!_sid) {
-        SPI.transfer(c);
-	// might be able to make this even faster but
-	// a delay -is- required
-	delayMicroseconds(1);
-        return;
-    }
-    
-    int8_t i;
-    
-    *sclkport |= sclkpinmask;
-    
-    for (i=7; i>=0; i--) {
-        *sclkport &= ~sclkpinmask;
-        //SCLK_PORT &= ~_BV(SCLK);
-        
-        if (c & _BV(i)) {
-            *sidport |= sidpinmask;
-            //digitalWrite(_sid, HIGH);
-            //SID_PORT |= _BV(SID);
-        } else {
-            *sidport &= ~sidpinmask;
-            //digitalWrite(_sid, LOW);
-            //SID_PORT &= ~_BV(SID);
-        }
-        
-        *sclkport |= sclkpinmask;
-        //SCLK_PORT |= _BV(SCLK);
-    }
-}*/
-
 
 void writeCommand(uint8_t c) {
 
@@ -134,20 +43,6 @@ void writeCommand(uint8_t c) {
 
 	//Disable MCU communication
 	ROM_GPIOPinWrite (portA, oc, 0x08);
-	
-/*
-    *rsport &= ~ rspinmask;     SET DATA/COMMAND TO COMMAND
-    //digitalWrite(_rs, LOW);
-    
-    *csport &= ~ cspinmask;     PULL CS LOW TO ENABLE MCU COMMUNICATION
-    //digitalWrite(_cs, LOW);
-    
-    //Serial.print("C ");       CALL SSIDATAPUT TO WRITE COMMAND
-    spiwrite(c);
-    
-    *csport |= cspinmask;       SET CS HIGH TO DISABLE
-    //digitalWrite(_cs, HIGH);
-*/
 }
 
 
@@ -161,22 +56,6 @@ void writeData(uint8_t c) {
 
   //Disable MCU communication
   ROM_GPIOPinWrite (portA, oc, 0x08);
-
-
- //etc
-    /*
-    *rsport |= rspinmask;
-    //digitalWrite(_rs, HIGH);
-    
-    *csport &= ~ cspinmask;
-    //digitalWrite(_cs, LOW);
-    
-//    Serial.print("D ");
-    spiwrite(c);
-    
-    *csport |= cspinmask;
-    //digitalWrite(_cs, HIGH);
-    */
 } 
 
 /***********************************/
@@ -225,13 +104,6 @@ void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillco
     w = SSD1351WIDTH - x - 1;
   }
   
-  /*
-  Seral.print(x); Serial.print(", ");
-  Serial.print(y); Serial.print(", ");
-  Serial.print(w); Serial.print(", ");
-  Serial.print(h); Serial.println(", ");
-*/
-
   // set location
   writeCommand(SSD1351_CMD_SETCOLUMN);
   writeData(x);
@@ -430,33 +302,16 @@ void drawPixel(int16_t x, int16_t y, uint16_t color)
 }
 
 void begin(void) { //FIX THIS
-    // set pin directions
-    /*ROM_GPIOPinTypeGPIOOutput(portB, dc);             //pinMode(_rs, OUTPUT);
-    if (ROM_GPIOPinRead(portA, cl))
-    {
-      ROM_GPIOPinTypeGPIOOutput(portA, cl);           //pinMode(_sclk, OUTPUT);  
-      ROM_GPIOPinTypeGPIOOutput(portA, si);           //pinMode(_sid, OUTPUT);
-    } 
-    else 
-    {
-      SPI.begin();                                   //using the hardware SPI //DONE IN MAIN
-      SPI.setDataMode(SPI_MODE3);
-    }*/
-	 
-    //Toggle RST low to reset; CS low so it'll listen to us
-    //ROM_GPIOPinTypeGPIOOutput(portA, oc);             //pinMode(_cs, OUTPUT);
+
     ROM_GPIOPinWrite(portA, oc, 0x00);                //digitalWrite(_cs, LOW);
 
-    
-    //if (ROM_GPIOPinRead(portB, rst))                  //if(_rst) { 
-    //{
+
     ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
     ROM_GPIOPinWrite(portB, rst, 0x00);           //digitalWrite(_rst, LOW);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
     ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
-    //}
 
     // Initialization Sequence
     writeCommand(SSD1351_CMD_COMMANDLOCK);  // set command lock
@@ -537,54 +392,6 @@ void invert(bool v) {
      	writeCommand(SSD1351_CMD_NORMALDISPLAY);
    }
  }
-
-/********************************* low level pin initialization */
-
-/*
-Adafruit_SSD1351::Adafruit_SSD1351(uint8_t cs, uint8_t rs,  uint8_t rst) : Adafruit_GFX(SSD1351WIDTH, SSD1351HEIGHT) {
-    _cs = cs;
-    _rs = rs;
-    _sid = 0;
-    _sclk = 0;
-    _rst = rst;
-
-    csport      = portOutputRegister(digitalPinToPort(cs));
-    cspinmask   = digitalPinToBitMask(cs);
-    
-    rsport      = portOutputRegister(digitalPinToPort(rs));
-    rspinmask   = digitalPinToBitMask(rs);
-
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

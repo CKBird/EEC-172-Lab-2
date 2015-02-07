@@ -1,9 +1,10 @@
-#ifdef __AVR__
+/*#ifdef __AVR__
     #include <avr/io.h>
     #include <avr/pgmspace.h>
 #else
     #define PROGMEM
-#endif
+#endif*/
+#define PROGMEM
 
 #ifndef FONT5X7_H
 #define FONT5X7_H
@@ -267,4 +268,5 @@ static const unsigned char  font[] PROGMEM = {
 	0x00, 0x3C, 0x3C, 0x3C, 0x3C, 
 	0x00, 0x00, 0x00, 0x00, 0x00, 
 };
+
 #endif

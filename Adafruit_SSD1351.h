@@ -124,7 +124,7 @@ uint16_t swap1 (uint16_t a, uint16_t b);
   void rawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
   void rawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
 
-  uint8_t _cs, _rs, _rst, _sid, _sclk;
+  //uint8_t _cs, _rs, _rst, _sid, _sclk;
   //PortReg *csport, *rsport, *sidport, *sclkport;
   //PortMask cspinmask, rspinmask, sidpinmask, sclkpinmask;
 //};

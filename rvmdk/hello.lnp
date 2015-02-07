@@ -2,6 +2,8 @@
 ".\rvmdk\hello.o"
 ".\rvmdk\startup_rvmdk.o"
 ".\rvmdk\uartstdio.o"
+".\rvmdk\adafruit_gfx.o"
+".\rvmdk\adafruit_ssd1351.o"
 "C:\ti\TivaWare_C_Series-1.1\driverlib\rvmdk\driverlib.lib"
 --library_type=microlib --strict --scatter "hello.sct"
 
