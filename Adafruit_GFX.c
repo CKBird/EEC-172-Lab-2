@@ -1,6 +1,6 @@
-
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 #include "inc/hw_memmap.h"
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
@@ -9,9 +9,37 @@
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
 #include "driverlib/rom.h"
-#include "Adafruit_GFX.h"
 #include "glcdfont.c"
 #include "math.h" 
+#include "Adafruit_GFX.h"
+
+int16_t _width;
+int16_t _height; // Display w/h as modified by current rotation
+int16_t cursor_x; 
+int16_t cursor_y;
+uint16_t  textcolor, textbgcolor;
+uint8_t textsize, rotation;
+bool wrap; // If set, 'wrap' text at right edge of display
+
+const uint32_t portA = GPIO_PORTA_BASE;
+const uint32_t portB = GPIO_PORTB_BASE;
+
+//Port A pins (SSI)
+const uint8_t cl = GPIO_PIN_2;
+const uint8_t oc = GPIO_PIN_3;
+const uint8_t si = GPIO_PIN_5;
+
+//Port B pins (GPIO)
+const uint8_t rst = GPIO_PIN_5;
+const uint8_t dc = GPIO_PIN_6;
+
+uint16_t swap1 (uint16_t a, uint16_t b) { 
+  uint16_t t = a; 
+  a = b; 
+  b = t; 
+  return t;
+}
+
 
 // Draw a circle outline
 void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color) {
@@ -175,16 +203,16 @@ void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
   drawLine(x, y, x+w-1, y, color);
 }
 */
-void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
+/*void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color) {
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     drawFastVLine(i, y, h, color);
   }
-}
+}*/
 
-void fillScreen(uint16_t color) {
-  fillRect(0, 0, _width, _height, color);
-}
+//void fillScreen(uint16_t color) {
+  //fillRect(0, 0, _width, _height, color);
+//}
 
 // Draw a rounded rectangle
 void drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color) {
@@ -292,7 +320,7 @@ void fillTriangle ( int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, 
 //Draw XBitMap Files (*.xbm), exported from GIMP,
 //Usage: Export from GIMP to *.xbm, rename *.xbm to *.c and open in editor.
 //C Array can be directly used with this function
-void drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) {
+/*void drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color) {
   
   int16_t i, j, byteWidth = (w + 7) / 8;
   
@@ -303,7 +331,7 @@ void drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t
       }
     }
   }
-}
+}*/
 
 // Draw a character
 void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size) {
@@ -316,8 +344,8 @@ void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg
 
   for (int8_t i=0; i<6; i++ ) {
     uint8_t line;
-    if (i == 5) 
-      line = 0x0;
+    if (i == 5)
+		{ line = 0x0;}
     else 
       line = font[(c*5)+i];
     for (int8_t j = 0; j<8; j++) {
@@ -396,64 +424,40 @@ int16_t height(void){
   // Do nothing, must be subclassed if supported
 //}
 
-#include "Adafruit_GFX.h"
-#include "Adafruit_SSD1351.h"
-#include "glcdfont.c"
-#include <stdbool.h>
-#include <stdint.h>
-#include "inc/hw_memmap.h"
-#include "driverlib/gpio.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/ssi.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/uart.h"
-#include "utils/uartstdio.h"
-#include "driverlib/rom.h"
 
-const uint32_t portA = GPIO_PORTA_BASE;
-const uint32_t portB = GPIO_PORTB_BASE;
-
-//Port A pins (SSI)
-const uint8_t cl = GPIO_PIN_2;
-const uint8_t oc = GPIO_PIN_3;
-const uint8_t si = GPIO_PIN_5;
-
-//Port B pins (GPIO)
-const uint8_t rst = GPIO_PIN_5;
-const uint8_t dc = GPIO_PIN_6;
-
-uint16_t swap1 (uint16_t a, uint16_t b) { 
-  uint16_t t = a; 
-  a = b; 
-  b = t; 
-  return t;
-}
-
+///BETWEEN BOTH MERGED FILES
 
 void writeCommand(uint8_t c) {
+  while(SSIBusy(SSI0_BASE))
+  {
 
+  }
   //DC low to indicate command, then enable MCU communication
   ROM_GPIOPinWrite (portB, dc, 0x00); 
-  ROM_GPIOPinWrite (portA, oc, 0x00);  
+  //ROM_GPIOPinWrite (portA, oc, 0x00);  
 
   //Imitate spiwrite
   SSIDataPut(SSI0_BASE, c);
 
   //Disable MCU communication
-  ROM_GPIOPinWrite (portA, oc, 0x08);
+  //ROM_GPIOPinWrite (portA, oc, 0x08);
+  while(SSIBusy(SSI0_BASE))
+  {
+    
+  }
 }
 
 
 void writeData(uint8_t c) {
     //DC low to indicate command, then enable MCU communication
   ROM_GPIOPinWrite (portB, dc, 0x40); 
-  ROM_GPIOPinWrite (portA, oc, 0x00);  
+  //ROM_GPIOPinWrite (portA, oc, 0x00);  
 
   //Imitate spiwrite
   SSIDataPut(SSI0_BASE, c);
 
   //Disable MCU communication
-  ROM_GPIOPinWrite (portA, oc, 0x08);
+  //ROM_GPIOPinWrite (portA, oc, 0x08);
 } 
 
 /***********************************/
@@ -687,21 +691,21 @@ void drawPixel(int16_t x, int16_t y, uint16_t color)
   // setup for data
   //*rsport |= rspinmask;
   //*csport &= ~ cspinmask; //FIx THIS
-  ROM_GPIOPinWrite(portB, dc, 1);
-  ROM_GPIOPinWrite(portA, oc, 0);
+  //ROM_GPIOPinWrite(portB, dc, 1);
+  //ROM_GPIOPinWrite(portA, oc, 0);
 
-  //spiwrite(color >> 8);    
-  //spiwrite(color);
-  SSIDataPut(SSI0_BASE, color >> 8);
-  SSIDataPut(SSI0_BASE,color);
+  writeData(color >> 8);    
+  writeData(color);
+  //SSIDataPut(SSI0_BASE, color >> 8);
+  //SSIDataPut(SSI0_BASE,color);
 
   //*csport |= cspinmask;
-  ROM_GPIOPinWrite(portA, oc, 1);
+  //ROM_GPIOPinWrite(portA, oc, 1);
 }
 
 void begin(void) { //FIX THIS
 
-    ROM_GPIOPinWrite(portA, oc, 0x00);                //digitalWrite(_cs, LOW);
+  //  ROM_GPIOPinWrite(portA, oc, 0x00);                //digitalWrite(_cs, LOW);
 
 
     ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);

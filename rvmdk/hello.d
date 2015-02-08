@@ -1,6 +1,9 @@
 .\rvmdk\hello.o: hello.c
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\inc/hw_memmap.h
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\driverlib/gpio.h
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\driverlib/pin_map.h
@@ -10,4 +13,5 @@
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\utils/uartstdio.h
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\rvmdk\hello.o: C:\ti\TivaWare_C_Series-1.1\driverlib/rom.h
-.\rvmdk\hello.o: Adafruit_SSD1351.h
+.\rvmdk\hello.o: glcdfont.c
+.\rvmdk\hello.o: Adafruit_GFX.h

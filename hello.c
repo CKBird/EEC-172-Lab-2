@@ -1,6 +1,9 @@
 //Standard Includes
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "inc/hw_memmap.h"
 #include "driverlib/gpio.h"
 #include "driverlib/pin_map.h"
@@ -9,10 +12,9 @@
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
 #include "driverlib/rom.h"
-
+#include "glcdfont.c" 
 //Extra Includes for OLED
-#include "Adafruit_SSD1351.h"
-//#include "Adafruit_GFX.h"
+#include "Adafruit_GFX.h"
 
 //# of bites to send and rec
 #define NUM_SSI_DATA            3
@@ -202,7 +204,17 @@ void testroundrects() {
 
 
 void tftPrintTest() {
-  fillScreen(BLACK);
+  //Print out all characters in font[]
+  for (int i=0; i<1275; i++) {
+    drawChar(32, 32, font[i], BLACK, WHITE, 5);
+  }
+  
+  //Print out Hello World!
+  char* hw = "Hello world!";
+  for (int i=0; i<strlen(hw); i++) {
+    drawChar(32, 32, hw[i], BLACK, WHITE, 5);
+  }
+  /*fillScreen(BLACK);
   setCursor(0, 5);
   setTextColor(RED);  
   setTextSize(1);
@@ -234,7 +246,7 @@ void tftPrintTest() {
   //print(millis() / 1000);
   setTextColor(WHITE);
   print(" seconds.");
-}
+*/}
 
 void mediabuttons() {
  // play
@@ -380,8 +392,8 @@ int main (void) {
 	//float p = 3.1415926;
 	while(1)
 	{
-		if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
-			begin();
+		//if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
+			//begin();
 		setup();
 	}
 }

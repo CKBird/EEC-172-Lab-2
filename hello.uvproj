@@ -470,19 +470,9 @@
               <FilePath>.\Adafruit_GFX.h</FilePath>
             </File>
             <File>
-              <FileName>Adafruit_SSD1351.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Adafruit_SSD1351.h</FilePath>
-            </File>
-            <File>
               <FileName>Adafruit_GFX.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Adafruit_GFX.c</FilePath>
-            </File>
-            <File>
-              <FileName>Adafruit_SSD1351.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Adafruit_SSD1351.c</FilePath>
             </File>
           </Files>
         </Group>

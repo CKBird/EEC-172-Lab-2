@@ -22,198 +22,37 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 C:\Users\Chris\Desktop\Lab2OLEDText\EEC-172-Lab-2\hello.uvproj
-Project File Date:  02/04/2015
+Project File Date:  02/06/2015
 
 <h2>Output:</h2>
 Rebuild target 'hello'
 compiling hello.c...
-hello.c(72): warning:  #223-D: function "width" declared implicitly
-    for (uint8_t x=0; x < width(); x++) 
-hello.c(74): warning:  #223-D: function "height" declared implicitly
-      for (uint8_t y=0; y < height(); y++) 
-hello.c(85): warning:  #223-D: function "width" declared implicitly
-     for (uint16_t x=0; x < width()-1; x+=6) {
-hello.c(86): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(0, 0, x, height()-1, color);
-hello.c(86): warning:  #223-D: function "height" declared implicitly
-       drawLine(0, 0, x, height()-1, color);
-hello.c(88): warning:  #223-D: function "height" declared implicitly
-     for (uint16_t y=0; y < height()-1; y+=6) {
-hello.c(89): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(0, 0, width()-1, y, color);
-hello.c(89): warning:  #223-D: function "width" declared implicitly
-       drawLine(0, 0, width()-1, y, color);
-hello.c(93): warning:  #223-D: function "width" declared implicitly
-     for (uint16_t x=0; x < width()-1; x+=6) {
-hello.c(94): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(width()-1, 0, x, height()-1, color);
-hello.c(94): warning:  #223-D: function "height" declared implicitly
-       drawLine(width()-1, 0, x, height()-1, color);
-hello.c(96): warning:  #223-D: function "height" declared implicitly
-     for (uint16_t y=0; y < height()-1; y+=6) {
-hello.c(97): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(width()-1, 0, 0, y, color);
-hello.c(97): warning:  #223-D: function "width" declared implicitly
-       drawLine(width()-1, 0, 0, y, color);
-hello.c(101): warning:  #223-D: function "width" declared implicitly
-     for (uint16_t x=0; x < width()-1; x+=6) {
-hello.c(102): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(0, height()-1, x, 0, color);
-hello.c(102): warning:  #223-D: function "height" declared implicitly
-       drawLine(0, height()-1, x, 0, color);
-hello.c(104): warning:  #223-D: function "height" declared implicitly
-     for (uint16_t y=0; y < height()-1; y+=6) {
-hello.c(105): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(0, height()-1, width()-1, y, color);
-hello.c(105): warning:  #223-D: function "width" declared implicitly
-       drawLine(0, height()-1, width()-1, y, color);
-hello.c(109): warning:  #223-D: function "width" declared implicitly
-     for (uint16_t x=0; x < width()-1; x+=6) {
-hello.c(110): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(width()-1, height()-1, x, 0, color);
-hello.c(110): warning:  #223-D: function "height" declared implicitly
-       drawLine(width()-1, height()-1, x, 0, color);
-hello.c(112): warning:  #223-D: function "height" declared implicitly
-     for (uint16_t y=0; y < height()-1; y+=6) {
-hello.c(113): warning:  #223-D: function "drawLine" declared implicitly
-       drawLine(width()-1, height()-1, 0, y, color);
-hello.c(113): warning:  #223-D: function "width" declared implicitly
-       drawLine(width()-1, height()-1, 0, y, color);
-hello.c(119): warning:  #223-D: function "setCursor" declared implicitly
-    setCursor(0,0);
-hello.c(120): warning:  #223-D: function "setTextColor" declared implicitly
-    setTextColor(color);
-hello.c(126): warning:  #223-D: function "height" declared implicitly
-     for (uint16_t y=0; y < height()-1; y+=5) {
-hello.c(127): warning:  #223-D: function "width" declared implicitly
-       drawFastHLine(0, y, width()-1, color1);
-hello.c(129): warning:  #223-D: function "width" declared implicitly
-     for (uint16_t x=0; x < width()-1; x+=5) {
-hello.c(130): warning:  #223-D: function "height" declared implicitly
-       drawFastVLine(x, 0, height()-1, color2);
-hello.c(136): warning:  #223-D: function "height" declared implicitly
-   for (uint16_t x=0; x < height()-1; x+=6) {
-hello.c(137): warning:  #223-D: function "drawRect" declared implicitly
-     drawRect((width()-1)/2 -x/2, (height()-1)/2 -x/2 , x, x, color);
-hello.c(137): warning:  #223-D: function "width" declared implicitly
-     drawRect((width()-1)/2 -x/2, (height()-1)/2 -x/2 , x, x, color);
-hello.c(143): warning:  #223-D: function "height" declared implicitly
-   for (uint16_t x=height()-1; x > 6; x-=6) {
-hello.c(144): warning:  #223-D: function "width" declared implicitly
-     fillRect((width()-1)/2 -x/2, (height()-1)/2 -x/2 , x, x, color1);
-hello.c(145): warning:  #223-D: function "drawRect" declared implicitly
-     drawRect((width()-1)/2 -x/2, (height()-1)/2 -x/2 , x, x, color2);
-hello.c(150): warning:  #223-D: function "width" declared implicitly
-    for (uint8_t x=radius; x < width()-1; x+=radius*2) {
-hello.c(151): warning:  #223-D: function "height" declared implicitly
-      for (uint8_t y=radius; y < height()-1; y+=radius*2) {
-hello.c(152): warning:  #223-D: function "fillCircle" declared implicitly
-        fillCircle(x, y, radius, color);
-hello.c(158): warning:  #223-D: function "width" declared implicitly
-    for (uint8_t x=0; x < width()-1+radius; x+=radius*2) {
-hello.c(159): warning:  #223-D: function "height" declared implicitly
-      for (uint8_t y=0; y < height()-1+radius; y+=radius*2) {
-hello.c(160): warning:  #223-D: function "drawCircle" declared implicitly
-        drawCircle(x, y, radius, color);
-hello.c(169): warning:  #223-D: function "width" declared implicitly
-    int w = width()/2;
-hello.c(170): warning:  #223-D: function "height" declared implicitly
-    int x = height();
-hello.c(174): warning:  #223-D: function "drawTriangle" declared implicitly
-      drawTriangle(w, y, y, x, z, x, color);
-hello.c(188): warning:  #223-D: function "width" declared implicitly
-    int w = width();
-hello.c(189): warning:  #223-D: function "height" declared implicitly
-    int h = height();
-hello.c(191): warning:  #223-D: function "drawRoundRect" declared implicitly
-      drawRoundRect(x, y, w, h, 5, color);
-hello.c(206): warning:  #223-D: function "setCursor" declared implicitly
-    setCursor(0, 5);
-hello.c(207): warning:  #223-D: function "setTextColor" declared implicitly
-    setTextColor(RED);  
-hello.c(208): warning:  #223-D: function "setTextSize" declared implicitly
-    setTextSize(1);
-hello.c(212): warning:  #223-D: function "println" declared implicitly
-    println("Hello World!");
-hello.c(215): warning:  #223-D: function "print" declared implicitly
-    print(1234.567);
-hello.c(242): warning:  #223-D: function "fillRoundRect" declared implicitly
-    fillRoundRect(25, 10, 78, 60, 8, WHITE);
-hello.c(243): warning:  #223-D: function "fillTriangle" declared implicitly
-    fillTriangle(42, 20, 42, 60, 90, 40, RED);
-hello.c(275): warning:  #69-D: integer conversion resulted in truncation
-          writeData(RED>>8); writeData(RED);
-hello.c(278): warning:  #69-D: integer conversion resulted in truncation
-          writeData(YELLOW>>8);writeData(YELLOW);
-hello.c(280): warning:  #69-D: integer conversion resulted in truncation
-        else if(i<48){writeData(GREEN>>8);writeData(GREEN);}
-hello.c(281): warning:  #69-D: integer conversion resulted in truncation
-        else if(i<64){writeData(CYAN>>8);writeData(CYAN);}
-hello.c(283): warning:  #69-D: integer conversion resulted in truncation
-        else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
 hello.c(287): warning:  #69-D: integer conversion resulted in truncation
+          writeData(RED>>8); writeData(RED);
+hello.c(290): warning:  #69-D: integer conversion resulted in truncation
+          writeData(YELLOW>>8);writeData(YELLOW);
+hello.c(292): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<48){writeData(GREEN>>8);writeData(GREEN);}
+hello.c(293): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<64){writeData(CYAN>>8);writeData(CYAN);}
+hello.c(295): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
+hello.c(299): warning:  #69-D: integer conversion resulted in truncation
           writeData(WHITE);
-hello.c(331): warning:  #223-D: function "width" declared implicitly
-    drawPixel(width()/2, height()/2, GREEN);
-hello.c(331): warning:  #223-D: function "height" declared implicitly
-    drawPixel(width()/2, height()/2, GREEN);
-hello.c(368): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
+hello.c(380): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
         uint32_t pui32DataTx[NUM_SSI_DATA];
-hello.c(369): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
+hello.c(381): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
         uint32_t pui32DataRx[NUM_SSI_DATA];
-hello.c(370): warning:  #177-D: variable "ui32Index" was declared but never referenced
+hello.c(382): warning:  #177-D: variable "ui32Index" was declared but never referenced
         uint32_t ui32Index;
-hello.c: 68 warnings, 0 errors
+hello.c: 9 warnings, 0 errors
 assembling startup_rvmdk.S...
 compiling uartstdio.c...
 compiling Adafruit_GFX.c...
-Adafruit_GFX.c(134): warning:  #223-D: function "drawFastVLine" declared implicitly
-    drawFastVLine(x0, y0-r, 2*r+1, color);
-Adafruit_GFX.c(158): warning:  #223-D: function "drawFastVLine" declared implicitly
-        drawFastVLine(x0+x, y0-y, 2*y+1+delta, color);
-Adafruit_GFX.c(162): warning:  #223-D: function "drawFastVLine" declared implicitly
-        drawFastVLine(x0-x, y0-y, 2*y+1+delta, color);
-Adafruit_GFX.c(170): warning:  #223-D: function "abs" declared implicitly
-    int16_t steep = abs(y1 - y0) > abs(x1 - x0);
-Adafruit_GFX.c(210): warning:  #223-D: function "drawFastHLine" declared implicitly
-    drawFastHLine(x, y, w, color);
-Adafruit_GFX.c(212): warning:  #223-D: function "drawFastVLine" declared implicitly
-    drawFastVLine(x, y, h, color);
-Adafruit_GFX.c(229): warning:  #223-D: function "drawFastVLine" declared implicitly
-      drawFastVLine(i, y, h, color);
-Adafruit_GFX.c(240): warning:  #223-D: function "drawFastHLine" declared implicitly
-    drawFastHLine(x+r  , y    , w-2*r, color); // Top
-Adafruit_GFX.c(242): warning:  #223-D: function "drawFastVLine" declared implicitly
-    drawFastVLine(x    , y+r  , h-2*r, color); // Left
-Adafruit_GFX.c(290): warning:  #223-D: function "drawFastHLine" declared implicitly
-      drawFastHLine(a, y0, b-a+1, color);
-Adafruit_GFX.c(324): warning:  #223-D: function "drawFastHLine" declared implicitly
-      drawFastHLine(a, y, b-a+1, color);
-Adafruit_GFX.c(341): warning:  #223-D: function "drawFastHLine" declared implicitly
-      drawFastHLine(a, y, b-a+1, color);
-Adafruit_GFX.c(386): warning:  #223-D: function "pgm_read_byte" declared implicitly
-        if(pgm_read_byte(bitmap + j * byteWidth + i / 8) & (1 << (i % 8))) {
-Adafruit_GFX.c: 13 warnings, 0 errors
-compiling Adafruit_SSD1351.c...
 linking...
-.\rvmdk\hello.axf: Error: L6200E: Symbol fillRect multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol fillScreen multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol WIDTH multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol HEIGHT multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol textsize multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol rotation multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol wrap multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol _width multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol _height multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol cursor_x multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol cursor_y multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol textcolor multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-.\rvmdk\hello.axf: Error: L6200E: Symbol textbgcolor multiply defined (by adafruit_ssd1351.o and adafruit_gfx.o).
-Not enough information to list image symbols.
-Not enough information to list the image map.
-Finished: 2 information, 0 warning and 13 error messages.
-".\rvmdk\hello.axf" - 13 Error(s), 81 Warning(s).
-Target not created.
+Program Size: Code=6592 RO-data=3420 RW-data=24 ZI-data=512  
+After Build - User command #1: fromelf --bin --output .\rvmdk\hello.bin .\rvmdk\hello.axf
+".\rvmdk\hello.axf" - 0 Error(s), 9 Warning(s).
 </pre>
 </body>
 </html>
