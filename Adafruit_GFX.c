@@ -30,7 +30,7 @@ const uint8_t oc = GPIO_PIN_3;
 const uint8_t si = GPIO_PIN_5;
 
 //Port B pins (GPIO)
-const uint8_t rst = GPIO_PIN_5;
+const uint8_t rst = GPIO_PIN_3; //GPIO_PIN_5;
 const uint8_t dc = GPIO_PIN_6;
 
 uint16_t swap1 (uint16_t a, uint16_t b) { 
@@ -708,11 +708,11 @@ void begin(void) { //FIX THIS
   //  ROM_GPIOPinWrite(portA, oc, 0x00);                //digitalWrite(_cs, LOW);
 
 
-    ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
+    ROM_GPIOPinWrite(portB, rst, rst/*0x20*/);           //digitalWrite(_rst, HIGH);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
     ROM_GPIOPinWrite(portB, rst, 0x00);           //digitalWrite(_rst, LOW);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
-    ROM_GPIOPinWrite(portB, rst, 0x20);           //digitalWrite(_rst, HIGH);
+    ROM_GPIOPinWrite(portB, rst, rst/*0x20*/);           //digitalWrite(_rst, HIGH);
     ROM_SysCtlDelay(SysCtlClockGet()/6);
 
     // Initialization Sequence

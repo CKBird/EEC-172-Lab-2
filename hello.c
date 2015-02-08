@@ -383,7 +383,7 @@ int main (void) {
 
 	ROM_SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
  	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
-	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5);        	//pinMode(_rst, OUTPUT);
+	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3);        	//pinMode(_rst, OUTPUT);
 	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
 
 	InitConsole();
@@ -394,6 +394,8 @@ int main (void) {
 	{
 		//if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
 			//begin();
-		setup();
+		//setup();
+    UARTprintf("Turning on\n");
+    fillScreen(WHITE);
 	}
 }
