@@ -62,7 +62,7 @@ void ConfigureSSI (void) {
 	ROM_GPIOPinTypeSSI(GPIO_PORTA_BASE, GPIO_PIN_5 | GPIO_PIN_4 | GPIO_PIN_3 | GPIO_PIN_2);
 
 	//Set to master mode (SPI), 8 bit data
-	ROM_SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_2, SSI_MODE_MASTER, 1000000, 8);
+	ROM_SSIConfigSetExpClk(SSI0_BASE, SysCtlClockGet(), SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, 1000000, 8);
 
 	//Enable SSI
 	ROM_SSIEnable(SSI0_BASE);
@@ -121,6 +121,10 @@ void testdrawtext(char *text, uint16_t color) {
   setCursor(0,0);
   setTextColor(color);
   UARTprintf(text);
+
+  for(int i = 0; i < 100; i++)
+    drawChar(2,2,*text, YELLOW, BLACK, 1);
+
 }
 
 void testfastlines(uint16_t color1, uint16_t color2) {
@@ -204,16 +208,18 @@ void testroundrects() {
 
 
 void tftPrintTest() {
-  //Print out all characters in font[]
+  /*//Print out all characters in font[]
   for (int i=0; i<1275; i++) {
-    drawChar(32, 32, font[i], BLACK, WHITE, 5);
-  }
+    drawChar(0, 5, font[i], WHITE, WHITE, 1);
+  }*/
   
   //Print out Hello World!
   char* hw = "Hello world!";
   for (int i=0; i<strlen(hw); i++) {
-    drawChar(32, 32, hw[i], BLACK, WHITE, 5);
+    write(58);
+    //drawChar(0, 5, hw[i], WHITE, WHITE, 1);
   }
+
   /*fillScreen(BLACK);
   setCursor(0, 5);
   setTextColor(RED);  
@@ -331,44 +337,55 @@ void setup(void) {
   invert(false);
   ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
 
+  UARTprintf("Test 0");
+
   fillScreen(BLACK);
   testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", WHITE);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
 
+  UARTprintf("Test 1");
   // tft print function!
   tftPrintTest();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
+  UARTprintf("Test 2");
   //a single pixel
   drawPixel(width()/2, height()/2, GREEN);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+UARTprintf("Test 3");
 
   // line draw test
   testlines(YELLOW);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
  
+ UARTprintf("Test 4");
   // optimized lines
   testfastlines(RED, BLUE);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
 
-
+UARTprintf("Test 5");
   testdrawrects(GREEN);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 
+UARTprintf("Test 6");
   testfillrects(YELLOW, MAGENTA);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 
+UARTprintf("Test 7");
   fillScreen(BLACK);
   testfillcircles(10, BLUE);
   testdrawcircles(10, WHITE);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
    
+   UARTprintf("Test 8");
   testroundrects();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
+  UARTprintf("Test 9");
   testtriangles();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
+  UARTprintf("Test 10");
   UARTprintf("done\n");
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 }
@@ -394,8 +411,7 @@ int main (void) {
 	{
 		//if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
 			//begin();
-		//setup();
-    UARTprintf("Turning on\n");
-    fillScreen(WHITE);
+    UARTprintf("Turning on now\n");
+		setup();
 	}
 }
