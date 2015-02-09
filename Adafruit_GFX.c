@@ -33,6 +33,7 @@ const uint8_t si = GPIO_PIN_5;
 const uint8_t rst = GPIO_PIN_3; //GPIO_PIN_5;
 const uint8_t dc = GPIO_PIN_6;
 
+
 uint16_t swap1 (uint16_t a, uint16_t b) { 
   uint16_t t = a; 
   a = b; 
@@ -796,4 +797,18 @@ void invert(bool v) {
  }
 
 
-
+void write(uint8_t c) {
+  if (c == '\n') {
+    cursor_y += textsize*8;
+    cursor_x  = 0;
+  } else if (c == '\r') {
+    // skip em
+  } else {
+    drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize);
+    cursor_x += textsize*6;
+    if (wrap && (cursor_x > (_width - textsize*6))) {
+      cursor_y += textsize*8;
+      cursor_x = 0;
+    }
+  }
+}
