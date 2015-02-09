@@ -121,10 +121,21 @@ void testdrawtext(char *text, uint16_t color) {
   setCursor(0,0);
   setTextColor(color);
   UARTprintf(text);
-
-  for(int i = 0; i < 100; i++)
-    drawChar(2,2,*text, YELLOW, BLACK, 1);
-
+  int line = 0;
+  for (int i=0; i<(strlen(text)); i++) {
+    if((i%12) == 0)
+    {
+      setTextWrap(1);
+      line++;
+    }
+    if(line == 32)
+    {
+      fillScreen(BLACK);
+      setCursor(0,5);
+    }
+    writeChar(text[i], color);
+    setTextWrap(0);
+  }
 }
 
 void testfastlines(uint16_t color1, uint16_t color2) {
@@ -208,17 +219,35 @@ void testroundrects() {
 
 
 void tftPrintTest() {
-  /*//Print out all characters in font[]
-  for (int i=0; i<1275; i++) {
-    drawChar(0, 5, font[i], WHITE, WHITE, 1);
-  }*/
+  //Print out all characters in font[]
+  int line = 0;
+  fillScreen(BLACK);
+  for (int i=0; i<1275; i++) 
+  {
+    if((i%12) == 0)
+    {
+      setTextWrap(1);
+      line++;
+    }
+    if(line == 32)
+    {
+      fillScreen(BLACK);
+      setCursor(0,5);
+      line = 0;
+    }
+    writeChar(font[i], WHITE); //writeChar(font[i]);
+    setTextWrap(0);
+  }
   
   //Print out Hello World!
+  fillScreen(BLACK);
+  setTextSize(3);
   char* hw = "Hello world!";
-  for (int i=0; i<strlen(hw); i++) {
-    write(58);
+  testdrawtext(hw, GREEN);
+  //for (int i=0; i<strlen(hw); i++) {
+    //writeChar(hw[i]);
     //drawChar(0, 5, hw[i], WHITE, WHITE, 1);
-  }
+  //}
 
   /*fillScreen(BLACK);
   setCursor(0, 5);
@@ -338,11 +367,14 @@ void setup(void) {
   ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
 
   UARTprintf("Test 0");
-
+  initHW();
+  setTextSize(1);
   fillScreen(BLACK);
   testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", WHITE);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
 
+  setCursor(0,5);
+  setTextSize(1);
   UARTprintf("Test 1");
   // tft print function!
   tftPrintTest();

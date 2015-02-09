@@ -27,34 +27,32 @@ Project File Date:  02/08/2015
 <h2>Output:</h2>
 Rebuild target 'hello'
 compiling hello.c...
-hello.c(219): warning:  #223-D: function "write" declared implicitly
-      write(58);
-hello.c(293): warning:  #69-D: integer conversion resulted in truncation
+hello.c(322): warning:  #69-D: integer conversion resulted in truncation
           writeData(RED>>8); writeData(RED);
-hello.c(296): warning:  #69-D: integer conversion resulted in truncation
+hello.c(325): warning:  #69-D: integer conversion resulted in truncation
           writeData(YELLOW>>8);writeData(YELLOW);
-hello.c(298): warning:  #69-D: integer conversion resulted in truncation
+hello.c(327): warning:  #69-D: integer conversion resulted in truncation
         else if(i<48){writeData(GREEN>>8);writeData(GREEN);}
-hello.c(299): warning:  #69-D: integer conversion resulted in truncation
+hello.c(328): warning:  #69-D: integer conversion resulted in truncation
         else if(i<64){writeData(CYAN>>8);writeData(CYAN);}
-hello.c(301): warning:  #69-D: integer conversion resulted in truncation
+hello.c(330): warning:  #69-D: integer conversion resulted in truncation
         else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
-hello.c(305): warning:  #69-D: integer conversion resulted in truncation
+hello.c(334): warning:  #69-D: integer conversion resulted in truncation
           writeData(WHITE);
-hello.c(397): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
+hello.c(429): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
         uint32_t pui32DataTx[NUM_SSI_DATA];
-hello.c(398): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
+hello.c(430): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
         uint32_t pui32DataRx[NUM_SSI_DATA];
-hello.c(399): warning:  #177-D: variable "ui32Index" was declared but never referenced
+hello.c(431): warning:  #177-D: variable "ui32Index" was declared but never referenced
         uint32_t ui32Index;
-hello.c: 10 warnings, 0 errors
+hello.c: 9 warnings, 0 errors
 assembling startup_rvmdk.S...
 compiling uartstdio.c...
 compiling Adafruit_GFX.c...
 linking...
-Program Size: Code=6844 RO-data=2144 RW-data=24 ZI-data=512  
+Program Size: Code=7036 RO-data=3420 RW-data=24 ZI-data=512  
 After Build - User command #1: fromelf --bin --output .\rvmdk\hello.bin .\rvmdk\hello.axf
-".\rvmdk\hello.axf" - 0 Error(s), 10 Warning(s).
+".\rvmdk\hello.axf" - 0 Error(s), 9 Warning(s).
 </pre>
 </body>
 </html>

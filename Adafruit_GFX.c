@@ -21,6 +21,16 @@ uint16_t  textcolor, textbgcolor;
 uint8_t textsize, rotation;
 bool wrap; // If set, 'wrap' text at right edge of display
 
+// Color definitions
+#define BLACK           0x0000
+#define BLUE            0x001F
+#define RED             0xF800
+#define GREEN           0x07E0
+#define CYAN            0x07FF
+#define MAGENTA         0xF81F
+#define YELLOW          0xFFE0  
+#define WHITE           0xFFFF
+
 const uint32_t portA = GPIO_PORTA_BASE;
 const uint32_t portB = GPIO_PORTB_BASE;
 
@@ -346,7 +356,9 @@ void drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg
   for (int8_t i=0; i<6; i++ ) {
     uint8_t line;
     if (i == 5)
-		{ line = 0x0;}
+		{ 
+      line = 0x0;
+    }
     else 
       line = font[(c*5)+i];
     for (int8_t j = 0; j<8; j++) {
@@ -394,6 +406,12 @@ void setTextWrap(bool w) {
 
 uint8_t getRotation(void){
   return rotation;
+}
+
+void initHW()
+{
+  _width = WIDTH;
+  _height = HEIGHT;
 }
 
 void setRotation(uint8_t x) {
@@ -797,14 +815,14 @@ void invert(bool v) {
  }
 
 
-void write(uint8_t c) {
+void writeChar(uint8_t c, uint16_t color) {
   if (c == '\n') {
     cursor_y += textsize*8;
     cursor_x  = 0;
   } else if (c == '\r') {
     // skip em
   } else {
-    drawChar(cursor_x, cursor_y, c, textcolor, textbgcolor, textsize);
+    drawChar(cursor_x, cursor_y, c, color, color, textsize);
     cursor_x += textsize*6;
     if (wrap && (cursor_x > (_width - textsize*6))) {
       cursor_y += textsize*8;

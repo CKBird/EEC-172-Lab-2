@@ -106,6 +106,7 @@ void Adafruit_Configure(uint8_t cs, uint8_t rs, uint8_t sid, uint8_t sclk, uint8
 void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor);
 void rawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
 void rawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
-
+void writeChar(uint8_t c, uint16_t color);
+void initHW (void);
 #endif // _ADAFRUIT_GFX_H
 
