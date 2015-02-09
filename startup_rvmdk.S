@@ -73,6 +73,8 @@ __heap_limit
         AREA    RESET, CODE, READONLY
         THUMB
 
+		EXTERN	Edge_Handler
+		EXTERN	SysTick_Handler
 ;******************************************************************************
 ;
 ; The vector table.
@@ -95,9 +97,9 @@ __Vectors
         DCD     IntDefaultHandler           ; Debug monitor handler
         DCD     0                           ; Reserved
         DCD     IntDefaultHandler           ; The PendSV handler
-        DCD     IntDefaultHandler           ; The SysTick handler
+        DCD     SysTick_Handler				; The SysTick handler
         DCD     IntDefaultHandler           ; GPIO Port A
-        DCD     IntDefaultHandler           ; GPIO Port B
+        DCD     Edge_Handler		        ; GPIO Port B
         DCD     IntDefaultHandler           ; GPIO Port C
         DCD     IntDefaultHandler           ; GPIO Port D
         DCD     IntDefaultHandler           ; GPIO Port E

@@ -6,96 +6,28 @@ Section Cross References
 
     hello.o(i.ConfigureSSI) refers to gpio.o(i.GPIOPinConfigure) for GPIOPinConfigure
     hello.o(i.ConfigureSSI) refers to sysctl.o(i.SysCtlClockGet) for SysCtlClockGet
-    hello.o(i.InitConsole) refers to gpio.o(i.GPIOPinTypeUART) for GPIOPinTypeUART
-    hello.o(i.InitConsole) refers to uart.o(i.UARTClockSourceSet) for UARTClockSourceSet
-    hello.o(i.InitConsole) refers to uartstdio.o(i.UARTStdioConfig) for UARTStdioConfig
-    hello.o(i.fillpixelbypixel) refers to adafruit_gfx.o(i.drawPixel) for drawPixel
-    hello.o(i.fillpixelbypixel) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.fillpixelbypixel) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.fillpixelbypixel) refers to sysctl.o(i.SysCtlClockGet) for SysCtlClockGet
-    hello.o(i.lcdTestPattern) refers to adafruit_gfx.o(i.goTo) for goTo
-    hello.o(i.lcdTestPattern) refers to adafruit_gfx.o(i.writeData) for writeData
-    hello.o(i.main) refers to hello.o(i.InitConsole) for InitConsole
+    hello.o(i.ConfigureUART) refers to uart.o(i.UARTClockSourceSet) for UARTClockSourceSet
+    hello.o(i.ConfigureUART) refers to uartstdio.o(i.UARTStdioConfig) for UARTStdioConfig
+    hello.o(i.Edge_Handler) refers to gpio.o(i.GPIOIntClear) for GPIOIntClear
+    hello.o(i.Edge_Handler) refers to hello.o(.data) for .data
+    hello.o(i.Edge_Handler) refers to hello.o(.bss) for .bss
+    hello.o(i.main) refers to gpio.o(i.GPIOIntEnable) for GPIOIntEnable
+    hello.o(i.main) refers to hello.o(i.ConfigureUART) for ConfigureUART
     hello.o(i.main) refers to hello.o(i.ConfigureSSI) for ConfigureSSI
-    hello.o(i.main) refers to adafruit_gfx.o(i.begin) for begin
     hello.o(i.main) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    hello.o(i.main) refers to hello.o(i.setup) for setup
-    hello.o(i.mediabuttons) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.mediabuttons) refers to adafruit_gfx.o(i.fillRoundRect) for fillRoundRect
-    hello.o(i.mediabuttons) refers to adafruit_gfx.o(i.fillTriangle) for fillTriangle
-    hello.o(i.mediabuttons) refers to sysctl.o(i.SysCtlClockGet) for SysCtlClockGet
-    hello.o(i.setup) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    hello.o(i.setup) refers to adafruit_gfx.o(i.begin) for begin
-    hello.o(i.setup) refers to adafruit_gfx.o(i.fillRect) for fillRect
-    hello.o(i.setup) refers to sysctl.o(i.SysCtlClockGet) for SysCtlClockGet
-    hello.o(i.setup) refers to hello.o(i.lcdTestPattern) for lcdTestPattern
-    hello.o(i.setup) refers to adafruit_gfx.o(i.invert) for invert
-    hello.o(i.setup) refers to adafruit_gfx.o(i.initHW) for initHW
-    hello.o(i.setup) refers to adafruit_gfx.o(i.setTextSize) for setTextSize
-    hello.o(i.setup) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.setup) refers to hello.o(i.testdrawtext) for testdrawtext
-    hello.o(i.setup) refers to adafruit_gfx.o(i.setCursor) for setCursor
-    hello.o(i.setup) refers to hello.o(i.tftPrintTest) for tftPrintTest
-    hello.o(i.setup) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.setup) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.setup) refers to adafruit_gfx.o(i.drawPixel) for drawPixel
-    hello.o(i.setup) refers to hello.o(i.testlines) for testlines
-    hello.o(i.setup) refers to hello.o(i.testfastlines) for testfastlines
-    hello.o(i.setup) refers to hello.o(i.testdrawrects) for testdrawrects
-    hello.o(i.setup) refers to hello.o(i.testfillrects) for testfillrects
-    hello.o(i.setup) refers to hello.o(i.testfillcircles) for testfillcircles
-    hello.o(i.setup) refers to hello.o(i.testdrawcircles) for testdrawcircles
-    hello.o(i.setup) refers to hello.o(i.testroundrects) for testroundrects
-    hello.o(i.setup) refers to hello.o(i.testtriangles) for testtriangles
-    hello.o(i.setup) refers to hello.o(.conststring) for .conststring
-    hello.o(i.testdrawcircles) refers to adafruit_gfx.o(i.drawCircle) for drawCircle
-    hello.o(i.testdrawcircles) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testdrawcircles) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testdrawrects) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testdrawrects) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testdrawrects) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testdrawrects) refers to adafruit_gfx.o(i.drawRect) for drawRect
-    hello.o(i.testdrawtext) refers to adafruit_gfx.o(i.setCursor) for setCursor
-    hello.o(i.testdrawtext) refers to adafruit_gfx.o(i.setTextColor) for setTextColor
-    hello.o(i.testdrawtext) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    hello.o(i.testdrawtext) refers to adafruit_gfx.o(i.setTextWrap) for setTextWrap
-    hello.o(i.testdrawtext) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testdrawtext) refers to adafruit_gfx.o(i.writeChar) for writeChar
-    hello.o(i.testdrawtext) refers to strlen.o(.text) for strlen
-    hello.o(i.testfastlines) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testfastlines) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testfastlines) refers to adafruit_gfx.o(i.drawFastHLine) for drawFastHLine
-    hello.o(i.testfastlines) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testfastlines) refers to adafruit_gfx.o(i.drawFastVLine) for drawFastVLine
-    hello.o(i.testfillcircles) refers to adafruit_gfx.o(i.fillCircle) for fillCircle
-    hello.o(i.testfillcircles) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testfillcircles) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testfillrects) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testfillrects) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testfillrects) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testfillrects) refers to adafruit_gfx.o(i.fillRect) for fillRect
-    hello.o(i.testfillrects) refers to adafruit_gfx.o(i.drawRect) for drawRect
-    hello.o(i.testlines) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testlines) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testlines) refers to adafruit_gfx.o(i.drawLine) for drawLine
-    hello.o(i.testlines) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testroundrects) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testroundrects) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testroundrects) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testroundrects) refers to adafruit_gfx.o(i.drawRoundRect) for drawRoundRect
-    hello.o(i.testroundrects) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    hello.o(i.testtriangles) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.testtriangles) refers to adafruit_gfx.o(i.width) for width
-    hello.o(i.testtriangles) refers to adafruit_gfx.o(i.height) for height
-    hello.o(i.testtriangles) refers to adafruit_gfx.o(i.drawTriangle) for drawTriangle
-    hello.o(i.tftPrintTest) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
-    hello.o(i.tftPrintTest) refers to adafruit_gfx.o(i.setTextWrap) for setTextWrap
-    hello.o(i.tftPrintTest) refers to adafruit_gfx.o(i.setCursor) for setCursor
-    hello.o(i.tftPrintTest) refers to adafruit_gfx.o(i.writeChar) for writeChar
-    hello.o(i.tftPrintTest) refers to adafruit_gfx.o(i.setTextSize) for setTextSize
-    hello.o(i.tftPrintTest) refers to hello.o(i.testdrawtext) for testdrawtext
-    hello.o(i.tftPrintTest) refers to hello.o(.constdata) for .constdata
+    hello.o(i.main) refers to adafruit_gfx.o(i.begin) for begin
+    hello.o(i.main) refers to adafruit_gfx.o(i.fillScreen) for fillScreen
+    hello.o(i.main) refers to gpio.o(i.GPIOIntDisable) for GPIOIntDisable
+    hello.o(i.main) refers to roundf.o(i.__hardfp_roundf) for __hardfp_roundf
+    hello.o(i.main) refers to adafruit_gfx.o(i.drawChar) for drawChar
+    hello.o(i.main) refers to dfltui.o(.text) for __aeabi_ui2d
+    hello.o(i.main) refers to dmul.o(.text) for __aeabi_dmul
+    hello.o(i.main) refers to dfixui.o(.text) for __aeabi_d2uiz
+    hello.o(i.main) refers to hello.o(.data) for .data
+    hello.o(i.main) refers to hello.o(.bss) for .bss
     startup_rvmdk.o(RESET) refers to startup_rvmdk.o(STACK) for StackMem
+    startup_rvmdk.o(RESET) refers to hello.o(i.SysTick_Handler) for SysTick_Handler
+    startup_rvmdk.o(RESET) refers to hello.o(i.Edge_Handler) for Edge_Handler
     startup_rvmdk.o(RESET) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     uartstdio.o(i.UARTStdioConfig) refers to uartstdio.o(.constdata) for .constdata
     uartstdio.o(i.UARTStdioConfig) refers to uartstdio.o(.data) for .data
@@ -251,6 +183,10 @@ Section Cross References
     interrupt.o(i.IntRegister) refers to interrupt.o(vtable) for vtable
     interrupt.o(i.IntUnregister) refers to interrupt.o(i._IntDefaultHandler) for _IntDefaultHandler
     interrupt.o(i.IntUnregister) refers to interrupt.o(vtable) for vtable
+    roundf.o(i.__hardfp_roundf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    roundf.o(i.__hardfp_roundf) refers to frnd.o(.text) for _frnd
+    roundf.o(i.roundf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    roundf.o(i.roundf) refers to roundf.o(i.__hardfp_roundf) for __hardfp_roundf
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -258,6 +194,12 @@ Section Cross References
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
+    dmul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dfltui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfltui.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dfixui.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfixui.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
     entry2.o(.ARM.Collect$$$$00002712) refers to startup_rvmdk.o(STACK) for __initial_sp
     entry2.o(__vectab_stack_and_reset_area) refers to startup_rvmdk.o(STACK) for __initial_sp
@@ -265,6 +207,9 @@ Section Cross References
     entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
     entry9a.o(.ARM.Collect$$$$0000000B) refers to hello.o(i.main) for main
     entry9b.o(.ARM.Collect$$$$0000000C) refers to hello.o(i.main) for main
+    frnd.o(.text) refers to fepilogue.o(.text) for _float_round
+    depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
     init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
 
 
@@ -272,20 +217,39 @@ Section Cross References
 
 Removing Unused input sections from the image.
 
-    Removing hello.o(i.fillpixelbypixel), (72 bytes).
-    Removing hello.o(i.loop), (2 bytes).
-    Removing hello.o(i.mediabuttons), (258 bytes).
+    Removing hello.o(.data), (4 bytes).
     Removing hello.o(.data), (4 bytes).
     Removing startup_rvmdk.o(HEAP), (0 bytes).
     Removing startup_rvmdk.o(.text), (0 bytes).
     Removing uartstdio.o(i.UARTgetc), (24 bytes).
     Removing uartstdio.o(i.UARTgets), (132 bytes).
     Removing adafruit_gfx.o(i.Color565), (24 bytes).
+    Removing adafruit_gfx.o(i.drawCircle), (254 bytes).
+    Removing adafruit_gfx.o(i.drawCircleHelper), (228 bytes).
+    Removing adafruit_gfx.o(i.drawFastHLine), (72 bytes).
+    Removing adafruit_gfx.o(i.drawFastVLine), (72 bytes).
+    Removing adafruit_gfx.o(i.drawLine), (162 bytes).
+    Removing adafruit_gfx.o(i.drawRect), (70 bytes).
+    Removing adafruit_gfx.o(i.drawRoundRect), (184 bytes).
+    Removing adafruit_gfx.o(i.drawTriangle), (56 bytes).
+    Removing adafruit_gfx.o(i.fillCircle), (52 bytes).
+    Removing adafruit_gfx.o(i.fillCircleHelper), (194 bytes).
     Removing adafruit_gfx.o(i.fillRoundRect), (102 bytes).
     Removing adafruit_gfx.o(i.fillTriangle), (330 bytes).
     Removing adafruit_gfx.o(i.getRotation), (12 bytes).
+    Removing adafruit_gfx.o(i.height), (12 bytes).
+    Removing adafruit_gfx.o(i.initHW), (16 bytes).
+    Removing adafruit_gfx.o(i.invert), (12 bytes).
+    Removing adafruit_gfx.o(i.rawFastHLine), (112 bytes).
+    Removing adafruit_gfx.o(i.rawFastVLine), (112 bytes).
+    Removing adafruit_gfx.o(i.setCursor), (12 bytes).
     Removing adafruit_gfx.o(i.setRotation), (36 bytes).
+    Removing adafruit_gfx.o(i.setTextColor), (12 bytes).
+    Removing adafruit_gfx.o(i.setTextSize), (16 bytes).
+    Removing adafruit_gfx.o(i.setTextWrap), (12 bytes).
     Removing adafruit_gfx.o(i.swap1), (2 bytes).
+    Removing adafruit_gfx.o(i.width), (12 bytes).
+    Removing adafruit_gfx.o(i.writeChar), (96 bytes).
     Removing adafruit_gfx.o(.constdata), (4 bytes).
     Removing adafruit_gfx.o(.constdata), (4 bytes).
     Removing adafruit_gfx.o(.constdata), (1 bytes).
@@ -298,15 +262,14 @@ Removing Unused input sections from the image.
     Removing gpio.o(i.GPIODMATriggerDisable), (14 bytes).
     Removing gpio.o(i.GPIODMATriggerEnable), (14 bytes).
     Removing gpio.o(i.GPIODirModeGet), (34 bytes).
-    Removing gpio.o(i.GPIOIntClear), (6 bytes).
-    Removing gpio.o(i.GPIOIntDisable), (14 bytes).
-    Removing gpio.o(i.GPIOIntEnable), (14 bytes).
+    Removing gpio.o(i.GPIODirModeSet), (40 bytes).
     Removing gpio.o(i.GPIOIntRegister), (56 bytes).
     Removing gpio.o(i.GPIOIntStatus), (14 bytes).
     Removing gpio.o(i.GPIOIntTypeGet), (68 bytes).
     Removing gpio.o(i.GPIOIntTypeSet), (80 bytes).
     Removing gpio.o(i.GPIOIntUnregister), (52 bytes).
     Removing gpio.o(i.GPIOPadConfigGet), (140 bytes).
+    Removing gpio.o(i.GPIOPadConfigSet), (176 bytes).
     Removing gpio.o(i.GPIOPinRead), (6 bytes).
     Removing gpio.o(i.GPIOPinTypeADC), (28 bytes).
     Removing gpio.o(i.GPIOPinTypeCAN), (28 bytes).
@@ -327,6 +290,7 @@ Removing Unused input sections from the image.
     Removing gpio.o(i.GPIOPinTypeQEI), (28 bytes).
     Removing gpio.o(i.GPIOPinTypeSSI), (28 bytes).
     Removing gpio.o(i.GPIOPinTypeTimer), (28 bytes).
+    Removing gpio.o(i.GPIOPinTypeUART), (28 bytes).
     Removing gpio.o(i.GPIOPinTypeUSBAnalog), (28 bytes).
     Removing gpio.o(i.GPIOPinTypeUSBDigital), (28 bytes).
     Removing gpio.o(i.GPIOPinWrite), (6 bytes).
@@ -457,7 +421,7 @@ Removing Unused input sections from the image.
     Removing interrupt.o(.constdata), (268 bytes).
     Removing interrupt.o(vtable), (620 bytes).
 
-184 unused section(s) (total 6236 bytes) removed from the image.
+203 unused section(s) (total 7886 bytes) removed from the image.
 
 ==============================================================================
 
@@ -468,20 +432,29 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     RESET                                    0x00000000   Section      648  startup_rvmdk.o(RESET)
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/string/strlen.c         0x00000000   Number         0  strlen.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
+    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
+    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  fepilogue.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
+    ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
+    ../fplib/microlib/fprnd.c                0x00000000   Number         0  frnd.o ABSOLUTE
+    ../mathlib/round.c                       0x00000000   Number         0  roundf.o ABSOLUTE
     Adafruit_GFX.c                           0x00000000   Number         0  adafruit_gfx.o ABSOLUTE
     C:\ti\TivaWare_C_Series-1.1\utils\uartstdio.c 0x00000000   Number         0  uartstdio.o ABSOLUTE
     cpu.c                                    0x00000000   Number         0  cpu.o ABSOLUTE
@@ -511,95 +484,72 @@ Image Symbol Table
     .ARM.Collect$$$$0000000F                 0x00000298   Section        0  entry11a.o(.ARM.Collect$$$$0000000F)
     .ARM.Collect$$$$00002712                 0x00000298   Section        4  entry2.o(.ARM.Collect$$$$00002712)
     __lit__00000000                          0x00000298   Data           4  entry2.o(.ARM.Collect$$$$00002712)
-    .text                                    0x0000029c   Section        0  strlen.o(.text)
-    .text                                    0x000002ac   Section       36  init.o(.text)
-    i.ConfigureSSI                           0x000002d0   Section        0  hello.o(i.ConfigureSSI)
-    i.GPIODirModeSet                         0x00000340   Section        0  gpio.o(i.GPIODirModeSet)
-    i.GPIOPadConfigSet                       0x00000368   Section        0  gpio.o(i.GPIOPadConfigSet)
-    i.GPIOPinConfigure                       0x00000418   Section        0  gpio.o(i.GPIOPinConfigure)
-    i.GPIOPinTypeUART                        0x00000460   Section        0  gpio.o(i.GPIOPinTypeUART)
-    i.InitConsole                            0x0000047c   Section        0  hello.o(i.InitConsole)
-    i.SSIBusy                                0x000004d8   Section        0  ssi.o(i.SSIBusy)
-    i.SSIDataPut                             0x000004e0   Section        0  ssi.o(i.SSIDataPut)
-    i.SysCtlClockGet                         0x000004ec   Section        0  sysctl.o(i.SysCtlClockGet)
-    i.UARTClockSourceSet                     0x000005f8   Section        0  uart.o(i.UARTClockSourceSet)
-    i.UARTStdioConfig                        0x00000600   Section        0  uartstdio.o(i.UARTStdioConfig)
-    i.UARTprintf                             0x0000065c   Section        0  uartstdio.o(i.UARTprintf)
-    i.UARTvprintf                            0x00000670   Section        0  uartstdio.o(i.UARTvprintf)
-    i.UARTwrite                              0x00000824   Section        0  uartstdio.o(i.UARTwrite)
-    i.__scatterload_copy                     0x00000860   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x0000086e   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x00000870   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.begin                                  0x00000880   Section        0  adafruit_gfx.o(i.begin)
-    i.drawChar                               0x000009e8   Section        0  adafruit_gfx.o(i.drawChar)
-    i.drawCircle                             0x00000aac   Section        0  adafruit_gfx.o(i.drawCircle)
-    i.drawCircleHelper                       0x00000baa   Section        0  adafruit_gfx.o(i.drawCircleHelper)
-    i.drawFastHLine                          0x00000c90   Section        0  adafruit_gfx.o(i.drawFastHLine)
-    i.drawFastVLine                          0x00000cd8   Section        0  adafruit_gfx.o(i.drawFastVLine)
-    i.drawLine                               0x00000d20   Section        0  adafruit_gfx.o(i.drawLine)
-    i.drawPixel                              0x00000dc4   Section        0  adafruit_gfx.o(i.drawPixel)
-    i.drawRect                               0x00000e18   Section        0  adafruit_gfx.o(i.drawRect)
-    i.drawRoundRect                          0x00000e5e   Section        0  adafruit_gfx.o(i.drawRoundRect)
-    i.drawTriangle                           0x00000f16   Section        0  adafruit_gfx.o(i.drawTriangle)
-    i.fillCircle                             0x00000f4e   Section        0  adafruit_gfx.o(i.fillCircle)
-    i.fillCircleHelper                       0x00000f82   Section        0  adafruit_gfx.o(i.fillCircleHelper)
-    i.fillRect                               0x00001044   Section        0  adafruit_gfx.o(i.fillRect)
-    i.fillScreen                             0x00001094   Section        0  adafruit_gfx.o(i.fillScreen)
-    i.goTo                                   0x000010a6   Section        0  adafruit_gfx.o(i.goTo)
-    i.height                                 0x000010e4   Section        0  adafruit_gfx.o(i.height)
-    i.initHW                                 0x000010f0   Section        0  adafruit_gfx.o(i.initHW)
-    i.invert                                 0x00001100   Section        0  adafruit_gfx.o(i.invert)
-    i.lcdTestPattern                         0x0000110c   Section        0  hello.o(i.lcdTestPattern)
-    i.main                                   0x00001180   Section        0  hello.o(i.main)
-    i.rawFastHLine                           0x000011e0   Section        0  adafruit_gfx.o(i.rawFastHLine)
-    i.rawFastVLine                           0x00001250   Section        0  adafruit_gfx.o(i.rawFastVLine)
-    i.rawFillRect                            0x000012c0   Section        0  adafruit_gfx.o(i.rawFillRect)
-    i.setCursor                              0x00001348   Section        0  adafruit_gfx.o(i.setCursor)
-    i.setTextColor                           0x00001354   Section        0  adafruit_gfx.o(i.setTextColor)
-    i.setTextSize                            0x00001360   Section        0  adafruit_gfx.o(i.setTextSize)
-    i.setTextWrap                            0x00001370   Section        0  adafruit_gfx.o(i.setTextWrap)
-    i.setup                                  0x0000137c   Section        0  hello.o(i.setup)
-    i.testdrawcircles                        0x000015f8   Section        0  hello.o(i.testdrawcircles)
-    i.testdrawrects                          0x0000163c   Section        0  hello.o(i.testdrawrects)
-    i.testdrawtext                           0x00001688   Section        0  hello.o(i.testdrawtext)
-    i.testfastlines                          0x000016ee   Section        0  hello.o(i.testfastlines)
-    i.testfillcircles                        0x00001744   Section        0  hello.o(i.testfillcircles)
-    i.testfillrects                          0x00001784   Section        0  hello.o(i.testfillrects)
-    i.testlines                              0x00001800   Section        0  hello.o(i.testlines)
-    i.testroundrects                         0x00001970   Section        0  hello.o(i.testroundrects)
-    i.testtriangles                          0x000019d0   Section        0  hello.o(i.testtriangles)
-    i.tftPrintTest                           0x00001a28   Section        0  hello.o(i.tftPrintTest)
-    i.width                                  0x00001aac   Section        0  adafruit_gfx.o(i.width)
-    i.writeChar                              0x00001ab8   Section        0  adafruit_gfx.o(i.writeChar)
-    i.writeCommand                           0x00001b18   Section        0  adafruit_gfx.o(i.writeCommand)
-    i.writeData                              0x00001b54   Section        0  adafruit_gfx.o(i.writeData)
-    .constdata                               0x00001b7c   Section     1275  hello.o(.constdata)
-    font                                     0x00001b7c   Data        1275  hello.o(.constdata)
-    .constdata                               0x00002078   Section       28  uartstdio.o(.constdata)
-    g_pcHex                                  0x00002078   Data           4  uartstdio.o(.constdata)
-    g_ui32UARTBase                           0x0000207c   Data          12  uartstdio.o(.constdata)
-    g_ui32UARTPeriph                         0x00002088   Data          12  uartstdio.o(.constdata)
-    .constdata                               0x00002094   Section     1275  adafruit_gfx.o(.constdata)
-    font                                     0x00002094   Data        1275  adafruit_gfx.o(.constdata)
-    .constdata                               0x00002590   Section      312  gpio.o(.constdata)
-    g_ppui32GPIOIntMapBlizzard               0x00002590   Data         192  gpio.o(.constdata)
-    g_pui32GPIOBaseAddrs                     0x00002650   Data         120  gpio.o(.constdata)
-    .constdata                               0x000026c8   Section      108  sysctl.o(.constdata)
-    g_pui32Xtals                             0x000026c8   Data         108  sysctl.o(.constdata)
-    .conststring                             0x00002734   Section      366  hello.o(.conststring)
-    .conststring                             0x000028a4   Section       17  uartstdio.o(.conststring)
-    .data                                    0x20000000   Section        8  uartstdio.o(.data)
-    bLastWasCR                               0x20000000   Data           1  uartstdio.o(.data)
-    g_ui32Base                               0x20000004   Data           4  uartstdio.o(.data)
-    .data                                    0x20000008   Section       16  adafruit_gfx.o(.data)
-    STACK                                    0x20000018   Section      512  startup_rvmdk.o(STACK)
-    StackMem                                 0x20000018   Data           0  startup_rvmdk.o(STACK)
+    .text                                    0x0000029c   Section        0  dmul.o(.text)
+    .text                                    0x00000380   Section        0  dfltui.o(.text)
+    .text                                    0x0000039a   Section        0  dfixui.o(.text)
+    .text                                    0x000003cc   Section        0  llushr.o(.text)
+    .text                                    0x000003ec   Section        0  frnd.o(.text)
+    .text                                    0x000003ec   Section        0  iusefp.o(.text)
+    .text                                    0x00000428   Section        0  depilogue.o(.text)
+    .text                                    0x000004e4   Section       36  init.o(.text)
+    .text                                    0x00000508   Section        0  llshl.o(.text)
+    .text                                    0x00000526   Section        0  fepilogue.o(.text)
+    i.ConfigureSSI                           0x00000594   Section        0  hello.o(i.ConfigureSSI)
+    i.ConfigureUART                          0x00000604   Section        0  hello.o(i.ConfigureUART)
+    i.Edge_Handler                           0x00000660   Section        0  hello.o(i.Edge_Handler)
+    i.GPIOIntClear                           0x000006a4   Section        0  gpio.o(i.GPIOIntClear)
+    i.GPIOIntDisable                         0x000006aa   Section        0  gpio.o(i.GPIOIntDisable)
+    i.GPIOIntEnable                          0x000006b8   Section        0  gpio.o(i.GPIOIntEnable)
+    i.GPIOPinConfigure                       0x000006c8   Section        0  gpio.o(i.GPIOPinConfigure)
+    i.SSIBusy                                0x00000710   Section        0  ssi.o(i.SSIBusy)
+    i.SSIDataPut                             0x00000718   Section        0  ssi.o(i.SSIDataPut)
+    i.SysCtlClockGet                         0x00000724   Section        0  sysctl.o(i.SysCtlClockGet)
+    i.SysTick_Handler                        0x00000830   Section        0  hello.o(i.SysTick_Handler)
+    i.UARTClockSourceSet                     0x00000832   Section        0  uart.o(i.UARTClockSourceSet)
+    i.UARTStdioConfig                        0x00000838   Section        0  uartstdio.o(i.UARTStdioConfig)
+    i.UARTprintf                             0x00000894   Section        0  uartstdio.o(i.UARTprintf)
+    i.UARTvprintf                            0x000008a8   Section        0  uartstdio.o(i.UARTvprintf)
+    i.UARTwrite                              0x00000a5c   Section        0  uartstdio.o(i.UARTwrite)
+    i.__hardfp_roundf                        0x00000a98   Section        0  roundf.o(i.__hardfp_roundf)
+    i.__scatterload_copy                     0x00000b32   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x00000b40   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x00000b42   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.begin                                  0x00000b50   Section        0  adafruit_gfx.o(i.begin)
+    i.drawChar                               0x00000cb8   Section        0  adafruit_gfx.o(i.drawChar)
+    i.drawPixel                              0x00000d7c   Section        0  adafruit_gfx.o(i.drawPixel)
+    i.fillRect                               0x00000dd0   Section        0  adafruit_gfx.o(i.fillRect)
+    i.fillScreen                             0x00000e20   Section        0  adafruit_gfx.o(i.fillScreen)
+    i.goTo                                   0x00000e32   Section        0  adafruit_gfx.o(i.goTo)
+    i.main                                   0x00000e70   Section        0  hello.o(i.main)
+    i.rawFillRect                            0x00001250   Section        0  adafruit_gfx.o(i.rawFillRect)
+    i.writeCommand                           0x000012d8   Section        0  adafruit_gfx.o(i.writeCommand)
+    i.writeData                              0x00001314   Section        0  adafruit_gfx.o(i.writeData)
+    .constdata                               0x0000133c   Section       28  uartstdio.o(.constdata)
+    g_pcHex                                  0x0000133c   Data           4  uartstdio.o(.constdata)
+    g_ui32UARTBase                           0x00001340   Data          12  uartstdio.o(.constdata)
+    g_ui32UARTPeriph                         0x0000134c   Data          12  uartstdio.o(.constdata)
+    .constdata                               0x00001358   Section     1275  adafruit_gfx.o(.constdata)
+    font                                     0x00001358   Data        1275  adafruit_gfx.o(.constdata)
+    .constdata                               0x00001854   Section      312  gpio.o(.constdata)
+    g_ppui32GPIOIntMapBlizzard               0x00001854   Data         192  gpio.o(.constdata)
+    g_pui32GPIOBaseAddrs                     0x00001914   Data         120  gpio.o(.constdata)
+    .constdata                               0x0000198c   Section      108  sysctl.o(.constdata)
+    g_pui32Xtals                             0x0000198c   Data         108  sysctl.o(.constdata)
+    .conststring                             0x000019f8   Section       17  uartstdio.o(.conststring)
+    .data                                    0x20000000   Section       16  hello.o(.data)
+    .data                                    0x20000010   Section        8  uartstdio.o(.data)
+    bLastWasCR                               0x20000010   Data           1  uartstdio.o(.data)
+    g_ui32Base                               0x20000014   Data           4  uartstdio.o(.data)
+    .data                                    0x20000018   Section       16  adafruit_gfx.o(.data)
+    .bss                                     0x20000028   Section      800  hello.o(.bss)
+    STACK                                    0x20000348   Section      512  startup_rvmdk.o(STACK)
+    StackMem                                 0x20000348   Data           0  startup_rvmdk.o(STACK)
 
     Global Symbols
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    BuildAttributes$$THM_ISAv4$E$P$D$K$B$S$7EM$VFPi3$EXTD16$VFPS$VFMA$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    BuildAttributes$$THM_ISAv4$E$P$D$K$B$S$7EM$VFPi3$EXTD16$VFPS$VFMA$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$IEEEJ$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
     __ARM_use_no_argv                        0x00000000   Number         0  hello.o ABSOLUTE
     __Vectors                                0x00000000   Data           0  startup_rvmdk.o(RESET)
     __cpp_initialize__aeabi_                  - Undefined Weak Reference
@@ -617,81 +567,71 @@ Image Symbol Table
     _main_init                               0x00000291   Thumb Code     0  entry9a.o(.ARM.Collect$$$$0000000B)
     __rt_final_cpp                           0x00000299   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
     __rt_final_exit                          0x00000299   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
-    strlen                                   0x0000029d   Thumb Code    14  strlen.o(.text)
-    __scatterload                            0x000002ad   Thumb Code    28  init.o(.text)
-    __scatterload_rt2                        0x000002ad   Thumb Code     0  init.o(.text)
-    ConfigureSSI                             0x000002d1   Thumb Code   100  hello.o(i.ConfigureSSI)
-    GPIODirModeSet                           0x00000341   Thumb Code    40  gpio.o(i.GPIODirModeSet)
-    GPIOPadConfigSet                         0x00000369   Thumb Code   176  gpio.o(i.GPIOPadConfigSet)
-    GPIOPinConfigure                         0x00000419   Thumb Code    64  gpio.o(i.GPIOPinConfigure)
-    GPIOPinTypeUART                          0x00000461   Thumb Code    28  gpio.o(i.GPIOPinTypeUART)
-    InitConsole                              0x0000047d   Thumb Code    74  hello.o(i.InitConsole)
-    SSIBusy                                  0x000004d9   Thumb Code     8  ssi.o(i.SSIBusy)
-    SSIDataPut                               0x000004e1   Thumb Code    12  ssi.o(i.SSIDataPut)
-    SysCtlClockGet                           0x000004ed   Thumb Code   250  sysctl.o(i.SysCtlClockGet)
-    UARTClockSourceSet                       0x000005f9   Thumb Code     6  uart.o(i.UARTClockSourceSet)
-    UARTStdioConfig                          0x00000601   Thumb Code    82  uartstdio.o(i.UARTStdioConfig)
-    UARTprintf                               0x0000065d   Thumb Code    18  uartstdio.o(i.UARTprintf)
-    UARTvprintf                              0x00000671   Thumb Code   420  uartstdio.o(i.UARTvprintf)
-    UARTwrite                                0x00000825   Thumb Code    56  uartstdio.o(i.UARTwrite)
-    __scatterload_copy                       0x00000861   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x0000086f   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x00000871   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    begin                                    0x00000881   Thumb Code   356  adafruit_gfx.o(i.begin)
-    drawChar                                 0x000009e9   Thumb Code   186  adafruit_gfx.o(i.drawChar)
-    drawCircle                               0x00000aad   Thumb Code   254  adafruit_gfx.o(i.drawCircle)
-    drawCircleHelper                         0x00000bab   Thumb Code   228  adafruit_gfx.o(i.drawCircleHelper)
-    drawFastHLine                            0x00000c91   Thumb Code    68  adafruit_gfx.o(i.drawFastHLine)
-    drawFastVLine                            0x00000cd9   Thumb Code    68  adafruit_gfx.o(i.drawFastVLine)
-    drawLine                                 0x00000d21   Thumb Code   162  adafruit_gfx.o(i.drawLine)
-    drawPixel                                0x00000dc5   Thumb Code    80  adafruit_gfx.o(i.drawPixel)
-    drawRect                                 0x00000e19   Thumb Code    70  adafruit_gfx.o(i.drawRect)
-    drawRoundRect                            0x00000e5f   Thumb Code   184  adafruit_gfx.o(i.drawRoundRect)
-    drawTriangle                             0x00000f17   Thumb Code    56  adafruit_gfx.o(i.drawTriangle)
-    fillCircle                               0x00000f4f   Thumb Code    52  adafruit_gfx.o(i.fillCircle)
-    fillCircleHelper                         0x00000f83   Thumb Code   194  adafruit_gfx.o(i.fillCircleHelper)
-    fillRect                                 0x00001045   Thumb Code    74  adafruit_gfx.o(i.fillRect)
-    fillScreen                               0x00001095   Thumb Code    18  adafruit_gfx.o(i.fillScreen)
-    goTo                                     0x000010a7   Thumb Code    62  adafruit_gfx.o(i.goTo)
-    height                                   0x000010e5   Thumb Code     8  adafruit_gfx.o(i.height)
-    initHW                                   0x000010f1   Thumb Code    10  adafruit_gfx.o(i.initHW)
-    invert                                   0x00001101   Thumb Code    12  adafruit_gfx.o(i.invert)
-    lcdTestPattern                           0x0000110d   Thumb Code   114  hello.o(i.lcdTestPattern)
-    main                                     0x00001181   Thumb Code    66  hello.o(i.main)
-    rawFastHLine                             0x000011e1   Thumb Code   112  adafruit_gfx.o(i.rawFastHLine)
-    rawFastVLine                             0x00001251   Thumb Code   112  adafruit_gfx.o(i.rawFastVLine)
-    rawFillRect                              0x000012c1   Thumb Code   134  adafruit_gfx.o(i.rawFillRect)
-    setCursor                                0x00001349   Thumb Code     8  adafruit_gfx.o(i.setCursor)
-    setTextColor                             0x00001355   Thumb Code     8  adafruit_gfx.o(i.setTextColor)
-    setTextSize                              0x00001361   Thumb Code    10  adafruit_gfx.o(i.setTextSize)
-    setTextWrap                              0x00001371   Thumb Code     6  adafruit_gfx.o(i.setTextWrap)
-    setup                                    0x0000137d   Thumb Code   520  hello.o(i.setup)
-    testdrawcircles                          0x000015f9   Thumb Code    68  hello.o(i.testdrawcircles)
-    testdrawrects                            0x0000163d   Thumb Code    76  hello.o(i.testdrawrects)
-    testdrawtext                             0x00001689   Thumb Code   102  hello.o(i.testdrawtext)
-    testfastlines                            0x000016ef   Thumb Code    86  hello.o(i.testfastlines)
-    testfillcircles                          0x00001745   Thumb Code    64  hello.o(i.testfillcircles)
-    testfillrects                            0x00001785   Thumb Code   124  hello.o(i.testfillrects)
-    testlines                                0x00001801   Thumb Code   366  hello.o(i.testlines)
-    testroundrects                           0x00001971   Thumb Code    90  hello.o(i.testroundrects)
-    testtriangles                            0x000019d1   Thumb Code    86  hello.o(i.testtriangles)
-    tftPrintTest                             0x00001a29   Thumb Code   110  hello.o(i.tftPrintTest)
-    width                                    0x00001aad   Thumb Code     8  adafruit_gfx.o(i.width)
-    writeChar                                0x00001ab9   Thumb Code    92  adafruit_gfx.o(i.writeChar)
-    writeCommand                             0x00001b19   Thumb Code    52  adafruit_gfx.o(i.writeCommand)
-    writeData                                0x00001b55   Thumb Code    32  adafruit_gfx.o(i.writeData)
-    Region$$Table$$Base                      0x000028b8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000028d8   Number         0  anon$$obj.o(Region$$Table)
-    textsize                                 0x20000008   Data           1  adafruit_gfx.o(.data)
-    rotation                                 0x20000009   Data           1  adafruit_gfx.o(.data)
-    wrap                                     0x2000000a   Data           1  adafruit_gfx.o(.data)
-    _width                                   0x2000000c   Data           2  adafruit_gfx.o(.data)
-    _height                                  0x2000000e   Data           2  adafruit_gfx.o(.data)
-    cursor_x                                 0x20000010   Data           2  adafruit_gfx.o(.data)
-    cursor_y                                 0x20000012   Data           2  adafruit_gfx.o(.data)
-    textcolor                                0x20000014   Data           2  adafruit_gfx.o(.data)
-    textbgcolor                              0x20000016   Data           2  adafruit_gfx.o(.data)
-    __initial_sp                             0x20000218   Data           0  startup_rvmdk.o(STACK)
+    __aeabi_dmul                             0x0000029d   Thumb Code   228  dmul.o(.text)
+    __aeabi_ui2d                             0x00000381   Thumb Code    26  dfltui.o(.text)
+    __aeabi_d2uiz                            0x0000039b   Thumb Code    50  dfixui.o(.text)
+    __aeabi_llsr                             0x000003cd   Thumb Code    32  llushr.o(.text)
+    _ll_ushift_r                             0x000003cd   Thumb Code     0  llushr.o(.text)
+    __I$use$fp                               0x000003ed   Thumb Code     0  iusefp.o(.text)
+    _frnd                                    0x000003ed   Thumb Code    60  frnd.o(.text)
+    _double_round                            0x00000429   Thumb Code    30  depilogue.o(.text)
+    _double_epilogue                         0x00000447   Thumb Code   156  depilogue.o(.text)
+    __scatterload                            0x000004e5   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x000004e5   Thumb Code     0  init.o(.text)
+    __aeabi_llsl                             0x00000509   Thumb Code    30  llshl.o(.text)
+    _ll_shift_l                              0x00000509   Thumb Code     0  llshl.o(.text)
+    _float_round                             0x00000527   Thumb Code    18  fepilogue.o(.text)
+    _float_epilogue                          0x00000539   Thumb Code    92  fepilogue.o(.text)
+    ConfigureSSI                             0x00000595   Thumb Code   100  hello.o(i.ConfigureSSI)
+    ConfigureUART                            0x00000605   Thumb Code    76  hello.o(i.ConfigureUART)
+    Edge_Handler                             0x00000661   Thumb Code    54  hello.o(i.Edge_Handler)
+    GPIOIntClear                             0x000006a5   Thumb Code     6  gpio.o(i.GPIOIntClear)
+    GPIOIntDisable                           0x000006ab   Thumb Code    14  gpio.o(i.GPIOIntDisable)
+    GPIOIntEnable                            0x000006b9   Thumb Code    14  gpio.o(i.GPIOIntEnable)
+    GPIOPinConfigure                         0x000006c9   Thumb Code    64  gpio.o(i.GPIOPinConfigure)
+    SSIBusy                                  0x00000711   Thumb Code     8  ssi.o(i.SSIBusy)
+    SSIDataPut                               0x00000719   Thumb Code    12  ssi.o(i.SSIDataPut)
+    SysCtlClockGet                           0x00000725   Thumb Code   250  sysctl.o(i.SysCtlClockGet)
+    SysTick_Handler                          0x00000831   Thumb Code     2  hello.o(i.SysTick_Handler)
+    UARTClockSourceSet                       0x00000833   Thumb Code     6  uart.o(i.UARTClockSourceSet)
+    UARTStdioConfig                          0x00000839   Thumb Code    82  uartstdio.o(i.UARTStdioConfig)
+    UARTprintf                               0x00000895   Thumb Code    18  uartstdio.o(i.UARTprintf)
+    UARTvprintf                              0x000008a9   Thumb Code   420  uartstdio.o(i.UARTvprintf)
+    UARTwrite                                0x00000a5d   Thumb Code    56  uartstdio.o(i.UARTwrite)
+    __hardfp_roundf                          0x00000a99   Thumb Code   154  roundf.o(i.__hardfp_roundf)
+    __scatterload_copy                       0x00000b33   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x00000b41   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x00000b43   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    begin                                    0x00000b51   Thumb Code   356  adafruit_gfx.o(i.begin)
+    drawChar                                 0x00000cb9   Thumb Code   186  adafruit_gfx.o(i.drawChar)
+    drawPixel                                0x00000d7d   Thumb Code    80  adafruit_gfx.o(i.drawPixel)
+    fillRect                                 0x00000dd1   Thumb Code    74  adafruit_gfx.o(i.fillRect)
+    fillScreen                               0x00000e21   Thumb Code    18  adafruit_gfx.o(i.fillScreen)
+    goTo                                     0x00000e33   Thumb Code    62  adafruit_gfx.o(i.goTo)
+    main                                     0x00000e71   Thumb Code   830  hello.o(i.main)
+    rawFillRect                              0x00001251   Thumb Code   134  adafruit_gfx.o(i.rawFillRect)
+    writeCommand                             0x000012d9   Thumb Code    52  adafruit_gfx.o(i.writeCommand)
+    writeData                                0x00001315   Thumb Code    32  adafruit_gfx.o(i.writeData)
+    Region$$Table$$Base                      0x00001a0c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00001a2c   Number         0  anon$$obj.o(Region$$Table)
+    started                                  0x20000000   Data           1  hello.o(.data)
+    currPress                                0x20000001   Data           1  hello.o(.data)
+    currChar                                 0x20000002   Data           1  hello.o(.data)
+    drawX                                    0x20000004   Data           2  hello.o(.data)
+    drawY                                    0x20000006   Data           2  hello.o(.data)
+    edgeI                                    0x20000008   Data           4  hello.o(.data)
+    setInd                                   0x2000000c   Data           4  hello.o(.data)
+    textsize                                 0x20000018   Data           1  adafruit_gfx.o(.data)
+    rotation                                 0x20000019   Data           1  adafruit_gfx.o(.data)
+    wrap                                     0x2000001a   Data           1  adafruit_gfx.o(.data)
+    _width                                   0x2000001c   Data           2  adafruit_gfx.o(.data)
+    _height                                  0x2000001e   Data           2  adafruit_gfx.o(.data)
+    cursor_x                                 0x20000020   Data           2  adafruit_gfx.o(.data)
+    cursor_y                                 0x20000022   Data           2  adafruit_gfx.o(.data)
+    textcolor                                0x20000024   Data           2  adafruit_gfx.o(.data)
+    textbgcolor                              0x20000026   Data           2  adafruit_gfx.o(.data)
+    edgeTimes                                0x20000028   Data         800  hello.o(.bss)
+    __initial_sp                             0x20000548   Data           0  startup_rvmdk.o(STACK)
 
 
 
@@ -701,115 +641,85 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_IROM (Base: 0x00000000, Size: 0x000028f0, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM (Base: 0x00000000, Size: 0x00001a54, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM (Base: 0x00000000, Size: 0x000028d8, Max: 0x00040000, ABSOLUTE)
-
-    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
-
-    0x00000000   0x00000288   Code   RO          173  * RESET               startup_rvmdk.o
-    0x00000288   0x00000000   Code   RO         1560  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000288   0x00000004   Code   RO         1565    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0000028c   0x00000004   Code   RO         1568    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x00000290   0x00000000   Code   RO         1570    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x00000290   0x00000000   Code   RO         1572    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x00000290   0x00000008   Code   RO         1573    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x00000298   0x00000000   Code   RO         1575    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x00000298   0x00000000   Code   RO         1577    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x00000298   0x00000004   Code   RO         1566    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x0000029c   0x0000000e   Code   RO         1563    .text               mc_w.l(strlen.o)
-    0x000002aa   0x00000002   PAD
-    0x000002ac   0x00000024   Code   RO         1579    .text               mc_w.l(init.o)
-    0x000002d0   0x00000070   Code   RO            1    i.ConfigureSSI      hello.o
-    0x00000340   0x00000028   Code   RO          492    i.GPIODirModeSet    driverlib.lib(gpio.o)
-    0x00000368   0x000000b0   Code   RO          502    i.GPIOPadConfigSet  driverlib.lib(gpio.o)
-    0x00000418   0x00000048   Code   RO          503    i.GPIOPinConfigure  driverlib.lib(gpio.o)
-    0x00000460   0x0000001c   Code   RO          524    i.GPIOPinTypeUART   driverlib.lib(gpio.o)
-    0x0000047c   0x0000005c   Code   RO            2    i.InitConsole       hello.o
-    0x000004d8   0x00000008   Code   RO          771    i.SSIBusy           driverlib.lib(ssi.o)
-    0x000004e0   0x0000000c   Code   RO          779    i.SSIDataPut        driverlib.lib(ssi.o)
-    0x000004ec   0x0000010c   Code   RO          896    i.SysCtlClockGet    driverlib.lib(sysctl.o)
-    0x000005f8   0x00000006   Code   RO         1163    i.UARTClockSourceSet  driverlib.lib(uart.o)
-    0x000005fe   0x00000002   PAD
-    0x00000600   0x0000005c   Code   RO          178    i.UARTStdioConfig   uartstdio.o
-    0x0000065c   0x00000012   Code   RO          181    i.UARTprintf        uartstdio.o
-    0x0000066e   0x00000002   PAD
-    0x00000670   0x000001b4   Code   RO          182    i.UARTvprintf       uartstdio.o
-    0x00000824   0x0000003c   Code   RO          183    i.UARTwrite         uartstdio.o
-    0x00000860   0x0000000e   Code   RO         1583    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x0000086e   0x00000002   Code   RO         1584    i.__scatterload_null  mc_w.l(handlers.o)
-    0x00000870   0x0000000e   Code   RO         1585    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x0000087e   0x00000002   PAD
-    0x00000880   0x00000168   Code   RO          243    i.begin             adafruit_gfx.o
-    0x000009e8   0x000000c4   Code   RO          244    i.drawChar          adafruit_gfx.o
-    0x00000aac   0x000000fe   Code   RO          245    i.drawCircle        adafruit_gfx.o
-    0x00000baa   0x000000e4   Code   RO          246    i.drawCircleHelper  adafruit_gfx.o
-    0x00000c8e   0x00000002   PAD
-    0x00000c90   0x00000048   Code   RO          247    i.drawFastHLine     adafruit_gfx.o
-    0x00000cd8   0x00000048   Code   RO          248    i.drawFastVLine     adafruit_gfx.o
-    0x00000d20   0x000000a2   Code   RO          249    i.drawLine          adafruit_gfx.o
-    0x00000dc2   0x00000002   PAD
-    0x00000dc4   0x00000054   Code   RO          250    i.drawPixel         adafruit_gfx.o
-    0x00000e18   0x00000046   Code   RO          251    i.drawRect          adafruit_gfx.o
-    0x00000e5e   0x000000b8   Code   RO          252    i.drawRoundRect     adafruit_gfx.o
-    0x00000f16   0x00000038   Code   RO          253    i.drawTriangle      adafruit_gfx.o
-    0x00000f4e   0x00000034   Code   RO          254    i.fillCircle        adafruit_gfx.o
-    0x00000f82   0x000000c2   Code   RO          255    i.fillCircleHelper  adafruit_gfx.o
-    0x00001044   0x00000050   Code   RO          256    i.fillRect          adafruit_gfx.o
-    0x00001094   0x00000012   Code   RO          258    i.fillScreen        adafruit_gfx.o
-    0x000010a6   0x0000003e   Code   RO          261    i.goTo              adafruit_gfx.o
-    0x000010e4   0x0000000c   Code   RO          262    i.height            adafruit_gfx.o
-    0x000010f0   0x00000010   Code   RO          263    i.initHW            adafruit_gfx.o
-    0x00001100   0x0000000c   Code   RO          264    i.invert            adafruit_gfx.o
-    0x0000110c   0x00000072   Code   RO            4    i.lcdTestPattern    hello.o
-    0x0000117e   0x00000002   PAD
-    0x00001180   0x00000060   Code   RO            6    i.main              hello.o
-    0x000011e0   0x00000070   Code   RO          265    i.rawFastHLine      adafruit_gfx.o
-    0x00001250   0x00000070   Code   RO          266    i.rawFastVLine      adafruit_gfx.o
-    0x000012c0   0x00000086   Code   RO          267    i.rawFillRect       adafruit_gfx.o
-    0x00001346   0x00000002   PAD
-    0x00001348   0x0000000c   Code   RO          268    i.setCursor         adafruit_gfx.o
-    0x00001354   0x0000000c   Code   RO          270    i.setTextColor      adafruit_gfx.o
-    0x00001360   0x00000010   Code   RO          271    i.setTextSize       adafruit_gfx.o
-    0x00001370   0x0000000c   Code   RO          272    i.setTextWrap       adafruit_gfx.o
-    0x0000137c   0x0000027c   Code   RO            8    i.setup             hello.o
-    0x000015f8   0x00000044   Code   RO            9    i.testdrawcircles   hello.o
-    0x0000163c   0x0000004c   Code   RO           10    i.testdrawrects     hello.o
-    0x00001688   0x00000066   Code   RO           11    i.testdrawtext      hello.o
-    0x000016ee   0x00000056   Code   RO           12    i.testfastlines     hello.o
-    0x00001744   0x00000040   Code   RO           13    i.testfillcircles   hello.o
-    0x00001784   0x0000007c   Code   RO           14    i.testfillrects     hello.o
-    0x00001800   0x0000016e   Code   RO           15    i.testlines         hello.o
-    0x0000196e   0x00000002   PAD
-    0x00001970   0x00000060   Code   RO           16    i.testroundrects    hello.o
-    0x000019d0   0x00000056   Code   RO           17    i.testtriangles     hello.o
-    0x00001a26   0x00000002   PAD
-    0x00001a28   0x00000084   Code   RO           18    i.tftPrintTest      hello.o
-    0x00001aac   0x0000000c   Code   RO          274    i.width             adafruit_gfx.o
-    0x00001ab8   0x00000060   Code   RO          275    i.writeChar         adafruit_gfx.o
-    0x00001b18   0x0000003c   Code   RO          276    i.writeCommand      adafruit_gfx.o
-    0x00001b54   0x00000028   Code   RO          277    i.writeData         adafruit_gfx.o
-    0x00001b7c   0x000004fb   Data   RO           19    .constdata          hello.o
-    0x00002077   0x00000001   PAD
-    0x00002078   0x0000001c   Data   RO          184    .constdata          uartstdio.o
-    0x00002094   0x000004fb   Data   RO          278    .constdata          adafruit_gfx.o
-    0x0000258f   0x00000001   PAD
-    0x00002590   0x00000138   Data   RO          528    .constdata          driverlib.lib(gpio.o)
-    0x000026c8   0x0000006c   Data   RO          932    .constdata          driverlib.lib(sysctl.o)
-    0x00002734   0x0000016e   Data   RO           20    .conststring        hello.o
-    0x000028a2   0x00000002   PAD
-    0x000028a4   0x00000011   Data   RO          185    .conststring        uartstdio.o
-    0x000028b5   0x00000003   PAD
-    0x000028b8   0x00000020   Data   RO         1581    Region$$Table       anon$$obj.o
-
-
-    Execution Region RW_IRAM (Base: 0x20000000, Size: 0x00000218, Max: 0x00008000, ABSOLUTE)
+    Execution Region ER_IROM (Base: 0x00000000, Size: 0x00001a2c, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000008   Data   RW          186    .data               uartstdio.o
-    0x20000008   0x00000010   Data   RW          286    .data               adafruit_gfx.o
-    0x20000018   0x00000200   Zero   RW          171    STACK               startup_rvmdk.o
+    0x00000000   0x00000288   Code   RO          118  * RESET               startup_rvmdk.o
+    0x00000288   0x00000000   Code   RO         1499  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000288   0x00000004   Code   RO         1508    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0000028c   0x00000004   Code   RO         1511    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x00000290   0x00000000   Code   RO         1513    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x00000290   0x00000000   Code   RO         1515    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x00000290   0x00000008   Code   RO         1516    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x00000298   0x00000000   Code   RO         1518    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x00000298   0x00000000   Code   RO         1520    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x00000298   0x00000004   Code   RO         1509    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x0000029c   0x000000e4   Code   RO         1502    .text               mf_w.l(dmul.o)
+    0x00000380   0x0000001a   Code   RO         1504    .text               mf_w.l(dfltui.o)
+    0x0000039a   0x00000032   Code   RO         1506    .text               mf_w.l(dfixui.o)
+    0x000003cc   0x00000020   Code   RO         1522    .text               mc_w.l(llushr.o)
+    0x000003ec   0x00000000   Code   RO         1524    .text               mc_w.l(iusefp.o)
+    0x000003ec   0x0000003c   Code   RO         1525    .text               mf_w.l(frnd.o)
+    0x00000428   0x000000ba   Code   RO         1527    .text               mf_w.l(depilogue.o)
+    0x000004e2   0x00000002   PAD
+    0x000004e4   0x00000024   Code   RO         1529    .text               mc_w.l(init.o)
+    0x00000508   0x0000001e   Code   RO         1531    .text               mc_w.l(llshl.o)
+    0x00000526   0x0000006e   Code   RO         1533    .text               mf_w.l(fepilogue.o)
+    0x00000594   0x00000070   Code   RO            1    i.ConfigureSSI      hello.o
+    0x00000604   0x0000005c   Code   RO            2    i.ConfigureUART     hello.o
+    0x00000660   0x00000044   Code   RO            3    i.Edge_Handler      hello.o
+    0x000006a4   0x00000006   Code   RO          428    i.GPIOIntClear      driverlib.lib(gpio.o)
+    0x000006aa   0x0000000e   Code   RO          429    i.GPIOIntDisable    driverlib.lib(gpio.o)
+    0x000006b8   0x0000000e   Code   RO          430    i.GPIOIntEnable     driverlib.lib(gpio.o)
+    0x000006c6   0x00000002   PAD
+    0x000006c8   0x00000048   Code   RO          438    i.GPIOPinConfigure  driverlib.lib(gpio.o)
+    0x00000710   0x00000008   Code   RO          706    i.SSIBusy           driverlib.lib(ssi.o)
+    0x00000718   0x0000000c   Code   RO          714    i.SSIDataPut        driverlib.lib(ssi.o)
+    0x00000724   0x0000010c   Code   RO          831    i.SysCtlClockGet    driverlib.lib(sysctl.o)
+    0x00000830   0x00000002   Code   RO            4    i.SysTick_Handler   hello.o
+    0x00000832   0x00000006   Code   RO         1098    i.UARTClockSourceSet  driverlib.lib(uart.o)
+    0x00000838   0x0000005c   Code   RO          123    i.UARTStdioConfig   uartstdio.o
+    0x00000894   0x00000012   Code   RO          126    i.UARTprintf        uartstdio.o
+    0x000008a6   0x00000002   PAD
+    0x000008a8   0x000001b4   Code   RO          127    i.UARTvprintf       uartstdio.o
+    0x00000a5c   0x0000003c   Code   RO          128    i.UARTwrite         uartstdio.o
+    0x00000a98   0x0000009a   Code   RO         1495    i.__hardfp_roundf   m_wm.l(roundf.o)
+    0x00000b32   0x0000000e   Code   RO         1537    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x00000b40   0x00000002   Code   RO         1538    i.__scatterload_null  mc_w.l(handlers.o)
+    0x00000b42   0x0000000e   Code   RO         1539    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x00000b50   0x00000168   Code   RO          179    i.begin             adafruit_gfx.o
+    0x00000cb8   0x000000c4   Code   RO          180    i.drawChar          adafruit_gfx.o
+    0x00000d7c   0x00000054   Code   RO          186    i.drawPixel         adafruit_gfx.o
+    0x00000dd0   0x00000050   Code   RO          192    i.fillRect          adafruit_gfx.o
+    0x00000e20   0x00000012   Code   RO          194    i.fillScreen        adafruit_gfx.o
+    0x00000e32   0x0000003e   Code   RO          197    i.goTo              adafruit_gfx.o
+    0x00000e70   0x000003e0   Code   RO            5    i.main              hello.o
+    0x00001250   0x00000086   Code   RO          203    i.rawFillRect       adafruit_gfx.o
+    0x000012d6   0x00000002   PAD
+    0x000012d8   0x0000003c   Code   RO          212    i.writeCommand      adafruit_gfx.o
+    0x00001314   0x00000028   Code   RO          213    i.writeData         adafruit_gfx.o
+    0x0000133c   0x0000001c   Data   RO          129    .constdata          uartstdio.o
+    0x00001358   0x000004fb   Data   RO          214    .constdata          adafruit_gfx.o
+    0x00001853   0x00000001   PAD
+    0x00001854   0x00000138   Data   RO          463    .constdata          driverlib.lib(gpio.o)
+    0x0000198c   0x0000006c   Data   RO          867    .constdata          driverlib.lib(sysctl.o)
+    0x000019f8   0x00000011   Data   RO          130    .conststring        uartstdio.o
+    0x00001a09   0x00000003   PAD
+    0x00001a0c   0x00000020   Data   RO         1535    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM (Base: 0x20000000, Size: 0x00000548, Max: 0x00008000, ABSOLUTE)
+
+    Base Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x00000010   Data   RW            7    .data               hello.o
+    0x20000010   0x00000008   Data   RW          131    .data               uartstdio.o
+    0x20000018   0x00000010   Data   RW          222    .data               adafruit_gfx.o
+    0x20000028   0x00000320   Zero   RW            6    .bss                hello.o
+    0x20000348   0x00000200   Zero   RW          116    STACK               startup_rvmdk.o
 
 
 ==============================================================================
@@ -819,24 +729,25 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2802         86       1275         16          0      18730   adafruit_gfx.o
-      2250        204       1641          0          0      14336   hello.o
-       648        622          0          0        512        264   startup_rvmdk.o
+      1034         40       1275         16          0       7313   adafruit_gfx.o
+      1266        214          0         16        800      10293   hello.o
+       648        622          0          0        512        276   startup_rvmdk.o
        606         30         45          8          0       4480   uartstdio.o
 
     ----------------------------------------------------------------------
-      6320        942       3000         24        512      37810   Object Totals
+      3558        906       1356         40       1312      22362   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        14          0          7          0          0          0   (incl. Padding)
+         4          0          4          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
 
-       316          8        312          0          0       5641   gpio.o
+       106          8        312          0          0       5331   gpio.o
         20          0          0          0          0        835   ssi.o
        268         18        108          0          0       1972   sysctl.o
          6          0          0          0          0        433   uart.o
+       154          0          0          0          0        140   roundf.o
          0          0          0          0          0          0   entry.o
          0          0          0          0          0          0   entry10a.o
          0          0          0          0          0          0   entry11a.o
@@ -847,21 +758,31 @@ Image component sizes
          8          4          0          0          0          0   entry9a.o
         30          0          0          0          0          0   handlers.o
         36          8          0          0          0         68   init.o
-        14          0          0          0          0         68   strlen.o
+         0          0          0          0          0          0   iusefp.o
+        30          0          0          0          0         68   llshl.o
+        32          0          0          0          0         68   llushr.o
+       186          0          0          0          0        176   depilogue.o
+        50          0          0          0          0         76   dfixui.o
+        26          0          0          0          0         76   dfltui.o
+       228          0          0          0          0         96   dmul.o
+       110          0          0          0          0        168   fepilogue.o
+        60          0          0          0          0         76   frnd.o
 
     ----------------------------------------------------------------------
-       716         42        420          0          0       9017   Library Totals
-         6          0          0          0          0          0   (incl. Padding)
+      1366         42        420          0          0       9583   Library Totals
+         4          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
 
-       610         26        420          0          0       8881   driverlib.lib
-       100         16          0          0          0        136   mc_w.l
+       400         26        420          0          0       8571   driverlib.lib
+       154          0          0          0          0        140   m_wm.l
+       148         16          0          0          0        204   mc_w.l
+       660          0          0          0          0        668   mf_w.l
 
     ----------------------------------------------------------------------
-       716         42        420          0          0       9017   Library Totals
+      1366         42        420          0          0       9583   Library Totals
 
     ----------------------------------------------------------------------
 
@@ -870,15 +791,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      7036        984       3420         24        512      41931   Grand Totals
-      7036        984       3420         24        512      41931   ELF Image Totals
-      7036        984       3420         24          0          0   ROM Totals
+      4924        948       1776         40       1312      29685   Grand Totals
+      4924        948       1776         40       1312      29685   ELF Image Totals
+      4924        948       1776         40          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                10456 (  10.21kB)
-    Total RW  Size (RW Data + ZI Data)               536 (   0.52kB)
-    Total ROM Size (Code + RO Data + RW Data)      10480 (  10.23kB)
+    Total RO  Size (Code + RO Data)                 6700 (   6.54kB)
+    Total RW  Size (RW Data + ZI Data)              1352 (   1.32kB)
+    Total ROM Size (Code + RO Data + RW Data)       6740 (   6.58kB)
 
 ==============================================================================
 

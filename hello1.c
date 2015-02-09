@@ -5,6 +5,7 @@
 #include "inc/hw_types.h"
 #include "inc/hw_gpio.h"
 #include "inc/hw_nvic.h"
+//#include "inc/hw_ints.h"
 #include "driverlib/debug.h"
 #include "driverlib/fpu.h"
 #include "driverlib/gpio.h"
@@ -33,9 +34,9 @@
 //Characters are of size 1 and 5x7(?)
 #define CHARSIZE 1
 #define CHARX 5
-#define CHARY 0
+#define CHARY 7
 
-#define RELOAD_VALUE 16000000 //16,000,000
+
 #ifdef DEBEG
 void
 __error__(char *pcFilename, uint32_t ui32Line)
@@ -44,7 +45,7 @@ __error__(char *pcFilename, uint32_t ui32Line)
 }
 #endif
 
-
+//PULSE globals
 volatile int edgeTimes[200]; 
 volatile int edgeI = 0;
 volatile unsigned char started = false;
@@ -58,13 +59,27 @@ volatile unsigned char currChar;
 volatile int setInd = 0;
 volatile char currPress = '-';
 
-void SysTick_Handler(void)
-{
-	//Will make later
+void SysTick_Handler (void) {
+	//If ~1s (.96s) has passed, turn off timeout detection (disable ints), set currChar in BW, move draw cursor, and reset iTicks
+	if (iTicks > 2) {
+		ROM_SysTickIntDisable();
+		drawChar (drawX, drawY, currChar, BLACK, WHITE, CHARSIZE);
+    UARTprintf("%c", currChar);
+		drawX += CHARX;
+		drawY += CHARY;
+		iTicks = 0;
+		
+		setInd = 0;
+		currPress = '-'; //Reset to '-' to indicate waiting for key
+	}
+	else
+		iTicks ++;
 }
 
-
 void Edge_Handler (void) {
+	//Timeout wait ended with a pulse instead of a timeout
+	//ROM_SysTickIntDisable();
+	
 	//If SysTick has not already begun, clear it by writing to it to start at reload value
 	GPIOIntClear(GPIO_PORTB_BASE, GPIO_PIN_7);
 	if (started == false) {
@@ -127,17 +142,20 @@ int main (void) {
 	ROM_IntEnable(INT_GPIOB); 
 	ROM_IntMasterEnable();
 	
+	ROM_SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+ 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
+	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3);        	//pinMode(_rst, OUTPUT);
+	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
+	
 	ConfigureUART();
 	ConfigureSSI();
 
 	UARTprintf("System Reset\n");
-
-
 	begin();
-	fillScreen(BLACK);
+  fillScreen(BLACK);
 	//Set up SysTick 
 	ROM_SysTickPeriodSet(RELOAD_VALUE);  //When SysTick is written to, this is written in as the reload value
-	ROM_SysTickIntDisable(); //Default SysTick interrupt just reloads SysTick
+	ROM_SysTickIntDisable(); //SysTick_Handler only runs while waiting for a timeout
 	ROM_SysTickEnable();    //SysTick will always be running, it gets cleared at the start of the pulse
 
 	int signalArr[90];
@@ -146,11 +164,12 @@ int main (void) {
 	float sigNum1 = 0.0;
 	int sigNum = 0;
 	int timesPressed = 0;
-	ROM_SysTickIntDisable();
+	//ROM_SysTickIntDisable();
 	//int repeat = 0;
 	
+  UARTprintf("I'm on line 170!\n");
 
-		//TEXTING variables
+	//TEXTING variables
 	unsigned char timeoutBegin = false; //boolean
 	char prevPress;
 	char* currSet;
@@ -162,38 +181,45 @@ int main (void) {
 	char set7[] = "pqrs";
 	char set8[] = "tuv";
 	char set9[] = "wxyz";
-	char* set0[] = " ";
-
-	while(1){
-		ROM_SysCtlSleep();
+	char set0[] = " ";
 	
-		if ((started == true) && (ROM_SysTickValueGet() < (RELOAD_VALUE - 2000000))) {
+	while(1){
+		//ROM_SysCtlSleep();
+    	//UARTprintf("I'm on line 188!\n");	
+		if ((started == true) && (ROM_SysTickValueGet() < (RELOAD_VALUE - 2000000))) {//If the timer has already started and has counted down past 40ms (2M ticks)
+			//repeat = 1;
+			//Block all signals while decoding
 			GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_7); 
 			timesPressed++;
+			//We know pulses start with a falling edge, so from edgeTime[0] (falling edge) to edgeTime [1] (rising edge), the signal must be low
+			//And from edgeTime[1](rising) to edgeTime[2](falling), the signal must be high, so (edgeTime[odd] - edgeTime[even]) are high values and vice versa
 			
+			//Calculate the number of ticks in each gap by subtracting
+			//Divide that by 11,275 ticks (.2255 ms) to get the number of quarters in each gap
+			//We only care about the values of two quarters in each period (which we already know must be low/high for the gap)
+			//(Number ticks in gap/11,725)/2 = Number of high/low values to add to signalArr for this gap
 			for (int i=0; i < edgeI; i++) {
-				gap = edgeTimes[i] - edgeTimes[i+1]; 		
-				sigNum1 = gap/22550; 										
+				gap = edgeTimes[i] - edgeTimes[i+1]; 		//Stores distance between first and second pulse
+				sigNum1 = gap/22550; 										//Number of values in gap = (Number ticks in gap/11,725)/2
 				float sigNum2 = roundf(sigNum1);
 				sigNum = sigNum2;				
 				
+
 				for (int j=0; j < sigNum; j++){
 					signalArr[signalI+j] = (i%2==0)? 0 : 1; //if it's edgeTime[even] - edgeTime[odd], append low values, and vice versa
 				}
 				signalI += sigNum;
 			}
-
-			signalI--;			
-
-	int binIndex = 0;
-	int signalIndexTwo = 0;
-	
-	int dValue = 0;
-	int binArray[50];
-		
+			signalI--;
+      UARTprintf("\n\n");
+			int binIndex = 0;
+			int signalIndexTwo = 0;
+			int dValue = 0;
+			int binArray[50];	
 			for(int i = 0; i < 50; i++)
 				binArray[i] = -2;
 
+      UARTprintf("I'm on line 221!\n");
 			while(signalIndexTwo < 84)
 			{
 				if((signalArr[signalIndexTwo] - signalArr[signalIndexTwo + 1]) == -1) //Rising edge, 0 to 128
@@ -216,7 +242,6 @@ int main (void) {
 				}
 			} //Above loop will fill binArray with the values 1, 0, and -1 based on rising, falling, or neither
 
-
 			binIndex = 0;
 			int signalB = 0;
 			for(int i = 0; i < 50; i++)
@@ -226,16 +251,18 @@ int main (void) {
 				else
 					signalB++; //Holds # of elements, not address at last element
 			}
-			
-			dValue = (8 * binArray[signalB - 4]) + (4 * binArray[signalB - 3]) + (2 * binArray[signalB - 2]) + (binArray[signalB - 1]);
-			UARTprintf("%d ", dValue);
-			//DVALUE HAS INTEGER NUMBER OF WHAT THEY PRESSED
+			binIndex = 0;
+			for(int i = 0; i < signalB; i++)
+        UARTprintf("%d ", binArray[i]);
 
+			dValue = (8 * binArray[signalB - 4]) + (4 * binArray[signalB - 3]) + (2 * binArray[signalB - 2]) + (binArray[signalB - 1]);
+			UARTprintf("\nDValue on Line 256: %d\n", dValue);
+			//BEGIN TEXTING ------------------------------------------------------------------------------------------------------------------------
 			if ((dValue >= 2 && dValue <= 9) || dValue == 0) { //If dValue is one of the acceptable numkeys (otherwise do nothing)
 				//Record prevPress before updating currPress
 				prevPress = currPress;
 				currPress = (char)(((int)'0')+dValue);
-				//UARTprintf("CURRPRESS: %c\n", currPress);
+				UARTprintf("I'm on line 262!\n");
 				//Select the correct char array for currSet
 				switch (currPress) {
 					case '2':
@@ -266,13 +293,12 @@ int main (void) {
 						currSet = set0;
 						break;
 				}
-				UARTprintf("PREVPRESS: %c\n", prevPress);
+				
 				if (prevPress == '-') { //First keypress
 					setInd = 0;
-					UARTprintf("Im the best\n");
 					currChar = currSet[setInd];
 					drawChar (drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
-          			UARTprintf("%c", currChar);
+          UARTprintf("%c", currChar);
 					//timeoutBegin = true;
 				}
 				
@@ -307,11 +333,18 @@ int main (void) {
           UARTprintf("%c", currChar);
 				}	
 			}
-
-
+			//END TEXTING ---------------------------------------------------------------------------------------------------------------------------
+	     UARTprintf("I'm on line 334!\n");
+			//Delay past redundancy pulses then re-enable interrupts
 			ROM_SysCtlDelay (ROM_SysCtlClockGet()*.14); 
-			GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_7);
-			
+		UARTprintf("\nSIGNALI: %d \n", signalI);			
+
+      	//for(int i = 0; i < edgeI; i++)
+        //	UARTprintf(" %d ", edgeTimes[i]);
+
+        for(int i = 0; i < signalI; i++)
+        	UARTprintf(" %d ", signalArr[i]);
+
 			//Reset global variables (edgeTimes does not need to be reset, gets overwritten)
 			edgeI = 0;
 			started = false;
@@ -319,11 +352,20 @@ int main (void) {
 			signalI =0;
 			for(int i = 0; i < 90; i++)
 				signalArr[i] = 0;
-			
 			for(int i = 0; i < 200; i++)
 				edgeTimes[i] = 0;
+			
+			//If we need to time for a timeout, reenable SysTick ints, reload SysTick, and reset flag (request processed)
+			if (timeoutBegin == true){ 
+				ROM_SysTickIntEnable();
+				NVIC_ST_CURRENT_R = 0x00;
+				iTicks = 0; //Redundancy to make sure iTicks is 0
+				timeoutBegin = false;
+			}
+			
+			//Everything reset, ready for next pulse
+			GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_7);
 		}
-		//UARTprintf("After If Loop \n");
 	}
 
 return 0;
