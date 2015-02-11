@@ -466,10 +466,23 @@ int main (void) {
 	uint32_t pui32DataRx[NUM_SSI_DATA];
 	uint32_t ui32Index;
 
-	ROM_SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
- 	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
+	ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+ 	//ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
+  //ATTEMPT
+  ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
 	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3);        	//pinMode(_rst, OUTPUT);
 	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_6);
+
+  ROM_GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_7 );  //Configure pin as input
+  //ROM_GPIOPadConfigSet(GPIO_PORTB_BASE, GPIO_PIN_7, GPIO_STRENGTH_8MA, GPIO_PIN_TYPE_STD_WPU); //Configure pull up resistor (Only needed for switches)
+    
+  //Configure chosen pin for interrupts
+  ROM_GPIOIntTypeSet(GPIO_PORTB_BASE, GPIO_PIN_7, GPIO_BOTH_EDGES); //Interrupt triggered on both edges (rising/falling distinguished in interrupt handler)
+
+  //Enable interrupts (on pin, port, and master)
+  GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_7);
+  ROM_IntEnable(INT_GPIOB); 
+  ROM_IntMasterEnable();
 
 	InitConsole();
 	ConfigureSSI();
@@ -510,7 +523,7 @@ int main (void) {
 	//float p = 3.1415926;
 	while(1)
 	{
-		ROM_SysCtlSleep();
+		//ROM_SysCtlSleep();
   
     if ((started == true) && (ROM_SysTickValueGet() < (RELOAD_VALUE - 2000000))) 
     {
@@ -533,7 +546,7 @@ int main (void) {
 
     int binIndex = 0;
     int signalIndexTwo = 0;
-    
+  
     int dValue = 0;
     int binArray[50];
       
@@ -673,4 +686,3 @@ int main (void) {
       }
     }
 	}
-}
