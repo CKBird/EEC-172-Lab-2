@@ -22,3 +22,4 @@
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\rvmdk\hello.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\rvmdk\hello.o: Adafruit_GFX.h
+.\rvmdk\hello.o: glcdfont.c

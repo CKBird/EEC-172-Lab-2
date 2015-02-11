@@ -27,19 +27,47 @@ Project File Date:  02/06/2015
 <h2>Output:</h2>
 Rebuild target 'hello'
 compiling hello.c...
-hello.c(165): warning:  #520-D: initialization with "{...}" expected for aggregate object
-        char* set0[] = " ";
-hello.c(266): error:  #513: a value of type "char **" cannot be assigned to an entity of type "char *"
-                                                currSet = set0;
-hello.c(329): warning:  #111-D: statement is unreachable
-  return 0;
-hello.c(154): warning:  #177-D: variable "timeoutBegin" was declared but never referenced
-        unsigned char timeoutBegin = false; //boolean
-hello.c: 3 warnings, 1 error
+hello.c(314): warning:  #69-D: integer conversion resulted in truncation
+          writeData(RED>>8); writeData(RED);
+hello.c(317): warning:  #69-D: integer conversion resulted in truncation
+          writeData(YELLOW>>8);writeData(YELLOW);
+hello.c(319): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<48){writeData(GREEN>>8);writeData(GREEN);}
+hello.c(320): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<64){writeData(CYAN>>8);writeData(CYAN);}
+hello.c(322): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
+hello.c(326): warning:  #69-D: integer conversion resulted in truncation
+          writeData(WHITE);
+hello.c(342): warning:  #69-D: integer conversion resulted in truncation
+          writeData(RED>>8); writeData(RED);
+hello.c(345): warning:  #69-D: integer conversion resulted in truncation
+          writeData(YELLOW>>8);writeData(YELLOW);
+hello.c(347): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<48){writeData(GREEN>>8);writeData(GREEN);}
+hello.c(348): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<64){writeData(CYAN>>8);writeData(CYAN);}
+hello.c(350): warning:  #69-D: integer conversion resulted in truncation
+        else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
+hello.c(354): warning:  #69-D: integer conversion resulted in truncation
+          writeData(WHITE);
+hello.c(465): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
+        uint32_t pui32DataTx[NUM_SSI_DATA];
+hello.c(466): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
+        uint32_t pui32DataRx[NUM_SSI_DATA];
+hello.c(467): warning:  #177-D: variable "ui32Index" was declared but never referenced
+        uint32_t ui32Index;
+hello.c(496): warning:  #177-D: variable "timeoutBegin" was declared but never referenced
+    unsigned char timeoutBegin = false; //boolean
+hello.c(676): warning:  #1-D: last line of file ends without a newline
+  }
+hello.c(676): error:  #169: expected a declaration
+  }
+hello.c: 17 warnings, 1 error
 assembling startup_rvmdk.S...
 compiling uartstdio.c...
 compiling Adafruit_GFX.c...
-".\rvmdk\hello.axf" - 1 Error(s), 3 Warning(s).
+".\rvmdk\hello.axf" - 1 Error(s), 17 Warning(s).
 Target not created.
 </pre>
 </body>

@@ -244,44 +244,7 @@ void tftPrintTest() {
   setTextSize(2);
   char* hw = "Hello world!";
   testdrawtext(hw, GREEN);
-  //for (int i=0; i<strlen(hw); i++) {
-    //writeChar(hw[i]);
-    //drawChar(0, 5, hw[i], WHITE, WHITE, 1);
-  //}
-
-  /*fillScreen(BLACK);
-  setCursor(0, 5);
-  setTextColor(RED);  
-  setTextSize(1);
-  UARTprintf("Hello World!");
-  setTextColor(YELLOW);
-  setTextSize(2);
-  println("Hello World!");
-  setTextColor(BLUE);
-  setTextSize(3);
-  print(1234.567);
-  ROM_SysCtlDelay(SysCtlClockGet()/2); //delay(1500);
-  setCursor(0, 5);
-  fillScreen(BLACK);
-  setTextColor(WHITE);
-  setTextSize(0);
-  println("Hello World!");
-  setTextSize(1);
-  setTextColor(GREEN);
-  print(p, 6);
-  println(" Want pi?");
-  println(" ");
-  println("845FED"); // print 8,675,309 out in HEX!
-  println(" Print HEX!");
-  println(" ");
-  setTextColor(WHITE);
-  println("Sketch has been");
-  println("running for: ");
-  setTextColor(MAGENTA);
-  //print(millis() / 1000);
-  setTextColor(WHITE);
-  print(" seconds.");
-*/}
+}
 
 void mediabuttons() {
  // play
@@ -371,14 +334,6 @@ void setup(void) {
 
   UARTprintf("init\n");
 
-  // You can optionally rotate the display by running the line below.
-  // Note that a value of 0 means no rotation, 1 means 90 clockwise,
-  // 2 means 180 degrees clockwise, and 3 means 270 degrees clockwise.
-  //setRotation(1);
-  // NOTE: The test pattern at the start will NOT be rotated!  The code
-  // for rendering the test pattern talks directly to the display and
-  // ignores any rotation.
-
   //uint16_t time = 111;
   fillRect(0, 0, 128, 128, BLACK);
   //time = millis() - time;
@@ -397,7 +352,6 @@ void setup(void) {
   invert(false);
   ROM_SysCtlDelay(SysCtlClockGet()/30); //delay(100);
 
-  UARTprintf("Test 0");
   initHW();
   setTextSize(1);
   fillScreen(BLACK);
@@ -406,54 +360,76 @@ void setup(void) {
 
   setCursor(0,5);
   setTextSize(1);
-  UARTprintf("Test 1");
   // tft print function!
   tftPrintTest();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
-  UARTprintf("Test 2");
   //a single pixel
   drawPixel(width()/2, height()/2, GREEN);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
-UARTprintf("Test 3");
 
   // line draw test
   testlines(YELLOW);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
  
- UARTprintf("Test 4");
   // optimized lines
   testfastlines(RED, BLUE);
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);    
 
-UARTprintf("Test 5");
   testdrawrects(GREEN);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 
-UARTprintf("Test 6");
   testfillrects(YELLOW, MAGENTA);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 
-UARTprintf("Test 7");
   fillScreen(BLACK);
   testfillcircles(10, BLUE);
   testdrawcircles(10, WHITE);
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
    
-   UARTprintf("Test 8");
   testroundrects();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
-  UARTprintf("Test 9");
   testtriangles();
   ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
   
-  UARTprintf("Test 10");
   UARTprintf("done\n");
   ROM_SysCtlDelay(SysCtlClockGet()/3); //delay(1000);
 }
 
 void loop() {
+}
+
+volatile int edgeTimes[200]; 
+volatile int edgeI = 0;
+volatile unsigned char started = false;
+volatile int repeat = 0;
+
+//TEXTING globals
+volatile int iTicks = 0;
+volatile int16_t drawX = 0;
+volatile int16_t drawY = 5;
+volatile unsigned char currChar;
+volatile int setInd = 0;
+volatile char currPress = '-';
+
+void SysTick_Handler(void)
+{
+  //Will make later
+}
+
+
+void Edge_Handler (void) {
+  //If SysTick has not already begun, clear it by writing to it to start at reload value
+  GPIOIntClear(GPIO_PORTB_BASE, GPIO_PIN_7);
+  if (started == false) {
+    NVIC_ST_CURRENT_R = 0x00; 
+    started = true;
+    //repeat = 0;
+  }
+  //Record time of edge, then increment edgeI
+  edgeTimes[edgeI] = ROM_SysTickValueGet(); 
+  edgeI++;
 }
 
 int main (void) {
@@ -469,12 +445,206 @@ int main (void) {
 	InitConsole();
 	ConfigureSSI();
 	begin();
+  UARTprintf("Turning on now\n");
+  setup();
+
+    //Set up SysTick 
+  ROM_SysTickPeriodSet(RELOAD_VALUE);  //When SysTick is written to, this is written in as the reload value
+  ROM_SysTickIntDisable(); //Default SysTick interrupt just reloads SysTick
+  ROM_SysTickEnable();    //SysTick will always be running, it gets cleared at the start of the pulse
+
+  int signalArr[90];
+  int signalI=0;
+  float gap = 0.0;
+  float sigNum1 = 0.0;
+  int sigNum = 0;
+  int timesPressed = 0;
+  ROM_SysTickIntDisable();
+  //int repeat = 0;
+  
+
+    //TEXTING variables
+  unsigned char timeoutBegin = false; //boolean
+  char prevPress;
+  char* currSet;
+  char set2[] = "abc";
+  char set3[] = "def";
+  char set4[] = "ghi";
+  char set5[] = "jkl";
+  char set6[] = "mno";
+  char set7[] = "pqrs";
+  char set8[] = "tuv";
+  char set9[] = "wxyz";
+  char set0[] = " ";
+
+  UARTprintf("Everything Loaded: should be displaying patterns.\n");
 	//float p = 3.1415926;
 	while(1)
 	{
-		//if(ROM_GPIOPinRead(GPIO_PORTB_BASE, GPIO_PIN_5))
-			//begin();
-    UARTprintf("Turning on now\n");
-		setup();
+		ROM_SysCtlSleep();
+  
+    if ((started == true) && (ROM_SysTickValueGet() < (RELOAD_VALUE - 2000000))) {
+      GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_7); 
+      timesPressed++;
+      
+      for (int i=0; i < edgeI; i++) {
+        gap = edgeTimes[i] - edgeTimes[i+1];    
+        sigNum1 = gap/22550;                    
+        float sigNum2 = roundf(sigNum1);
+        sigNum = sigNum2;       
+        
+        for (int j=0; j < sigNum; j++){
+          signalArr[signalI+j] = (i%2==0)? 0 : 1; //if it's edgeTime[even] - edgeTime[odd], append low values, and vice versa
+        }
+        signalI += sigNum;
+      }
+
+      signalI--;      
+
+  int binIndex = 0;
+  int signalIndexTwo = 0;
+  
+  int dValue = 0;
+  int binArray[50];
+    
+      for(int i = 0; i < 50; i++)
+        binArray[i] = -2;
+
+      while(signalIndexTwo < 84)
+      {
+        if((signalArr[signalIndexTwo] - signalArr[signalIndexTwo + 1]) == -1) //Rising edge, 0 to 128
+        {
+          binArray[binIndex] = 1;
+          signalIndexTwo = signalIndexTwo + 2;
+          binIndex++;
+        }
+        else if(signalArr[signalIndexTwo] - signalArr[signalIndexTwo + 1] == 1) //Falling edge, 128 to 0
+        {
+          binArray[binIndex] = 0;
+          signalIndexTwo = signalIndexTwo + 2;
+          binIndex++;
+        }
+        else
+        {
+          binArray[binIndex] = -1; //-1 if no change (no edge in period)
+          signalIndexTwo = signalIndexTwo + 2;
+          binIndex++;
+        }
+      } //Above loop will fill binArray with the values 1, 0, and -1 based on rising, falling, or neither
+
+
+      binIndex = 0;
+      int signalB = 0;
+      for(int i = 0; i < 50; i++)
+      {
+        if(binArray[i] == -2)
+          i = 50;
+        else
+          signalB++; //Holds # of elements, not address at last element
+      }
+      
+      dValue = (8 * binArray[signalB - 4]) + (4 * binArray[signalB - 3]) + (2 * binArray[signalB - 2]) + (binArray[signalB - 1]);
+      UARTprintf("%d ", dValue);
+      //DVALUE HAS INTEGER NUMBER OF WHAT THEY PRESSED
+
+      if ((dValue >= 2 && dValue <= 9) || dValue == 0) { //If dValue is one of the acceptable numkeys (otherwise do nothing)
+        //Record prevPress before updating currPress
+        prevPress = currPress;
+        currPress = (char)(((int)'0')+dValue);
+        //UARTprintf("CURRPRESS: %c\n", currPress);
+        //Select the correct char array for currSet
+        switch (currPress) {
+          case '2':
+            currSet = set2;
+            break;
+          case '3':
+            currSet = set3;
+            break;
+          case '4':
+            currSet = set4;
+            break;
+          case '5':
+            currSet = set5;
+            break;
+          case '6':
+            currSet = set6;
+            break;
+          case '7':
+            currSet = set7;
+            break;
+          case '8':
+            currSet = set8;
+            break;
+          case '9':
+            currSet = set9;
+            break;
+          case '0':
+            currSet = set0;
+            break;
+        }
+        char* death = "Death Does not Scare me";
+        UARTprintf("PREVPRESS: %c\n", prevPress);
+        testdrawtext(death, WHITE);
+        if (prevPress == '-') { //First keypress
+          setInd = 0;
+          UARTprintf("Im the best\n");
+          currChar = currSet[setInd];
+          drawChar (drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
+                UARTprintf("%c", currChar);
+          //timeoutBegin = true;
+        }
+        
+        else if (currPress == prevPress) { //If the same key was pressed again, cycle to next char in the set
+          setInd++;
+          
+          //Wraparound setInd depending on the current set
+          if ((currPress == '2' || currPress == '3' || currPress == '4' || currPress == '5' || currPress == '6' || currPress == '8') && setInd > 2)
+            setInd = 0;
+          if ((currPress == '7' || currPress == '9') && setInd > 3)
+            setInd = 0;
+          if (currPress == 0 && setInd > 0)
+            setInd = 0;
+          
+          //Update currChar and update it to the screen in WB
+          currChar = currSet[setInd];
+          drawChar (drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
+          UARTprintf("%c", currChar);
+          //Set timeoutBegin flag to begin timing for timeout
+          //timeoutBegin = true;
+        }
+        else { //Otherwise, a different key was pressed, so set currChar in BW, and move the draw cursor
+          drawChar (drawX, drawY, currChar, BLACK, WHITE, CHARSIZE);
+          UARTprintf("%c", currChar);
+          drawX += CHARX;
+          drawY += CHARY;
+          
+          //Then draw newest keypress
+          setInd = 0;
+          currChar = currSet[setInd];
+          drawChar(drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
+          UARTprintf("%c", currChar);
+        } 
+      }
+
+
+      ROM_SysCtlDelay (ROM_SysCtlClockGet()*.14); 
+      GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_7);
+      
+      //Reset global variables (edgeTimes does not need to be reset, gets overwritten)
+      edgeI = 0;
+      started = false;
+      //Reset other values
+      signalI =0;
+      for(int i = 0; i < 90; i++)
+        signalArr[i] = 0;
+      
+      for(int i = 0; i < 200; i++)
+        edgeTimes[i] = 0;
+    }
+    //UARTprintf("After If Loop \n");
+  }
+
+return 0;
+   
 	}
 }
