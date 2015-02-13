@@ -830,3 +830,20 @@ void writeChar(uint8_t c, uint16_t color) {
     }
   }
 }
+
+void writeChar1(uint8_t c, uint16_t color, uint16_t bg) {
+  if (c == '\n') {
+    cursor_y += textsize*8;
+    cursor_x  = 0;
+  } else if (c == '\r') {
+    // skip em
+  } else {
+    drawChar(cursor_x, cursor_y, c, color, bg, textsize);
+    cursor_x += textsize*6;
+    if (wrap && (cursor_x > (_width - textsize*6))) {
+      cursor_y += textsize*8;
+      cursor_x = 0;
+    }
+  }
+}
+

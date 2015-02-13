@@ -51,22 +51,24 @@ hello.c(350): warning:  #69-D: integer conversion resulted in truncation
         else if(i<96){writeData(MAGENTA>>8);writeData(MAGENTA);}
 hello.c(354): warning:  #69-D: integer conversion resulted in truncation
           writeData(WHITE);
+hello.c(698): warning:  #1-D: last line of file ends without a newline
+        }
 hello.c(465): warning:  #177-D: variable "pui32DataTx" was declared but never referenced
         uint32_t pui32DataTx[NUM_SSI_DATA];
 hello.c(466): warning:  #177-D: variable "pui32DataRx" was declared but never referenced
         uint32_t pui32DataRx[NUM_SSI_DATA];
 hello.c(467): warning:  #177-D: variable "ui32Index" was declared but never referenced
         uint32_t ui32Index;
-hello.c(509): warning:  #177-D: variable "timeoutBegin" was declared but never referenced
+hello.c(514): warning:  #177-D: variable "timeoutBegin" was declared but never referenced
     unsigned char timeoutBegin = false; //boolean
-hello.c: 16 warnings, 0 errors
+hello.c: 17 warnings, 0 errors
 assembling startup_rvmdk.S...
 compiling uartstdio.c...
 compiling Adafruit_GFX.c...
 linking...
-Program Size: Code=8972 RO-data=3420 RW-data=40 ZI-data=1312  
+Program Size: Code=5400 RO-data=1776 RW-data=40 ZI-data=1312  
 After Build - User command #1: fromelf --bin --output .\rvmdk\hello.bin .\rvmdk\hello.axf
-".\rvmdk\hello.axf" - 0 Error(s), 16 Warning(s).
+".\rvmdk\hello.axf" - 0 Error(s), 17 Warning(s).
 </pre>
 </body>
 </html>

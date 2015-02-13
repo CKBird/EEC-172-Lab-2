@@ -34,7 +34,7 @@
 #include "utils/uartstdio.h"
 #include "driverlib/ssi.h"
 #include "stdio.h"
-#include "string.h"
+#include <string.h>
 #include "stdlib.h"
 #include "math.h"
 #include "Adafruit_GFX.h"
@@ -55,7 +55,7 @@
 #define RELOAD_VALUE 16000000 //16,000,000
 //Characters are of size 1 and 5x7(?)
 #define CHARSIZE 1
-#define CHARX 5
+#define CHARX 6
 #define CHARY 0
 
 float p = 3.14159;
@@ -466,8 +466,8 @@ int main (void) {
 	uint32_t pui32DataRx[NUM_SSI_DATA];
 	uint32_t ui32Index;
 
-	ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
- 	//ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
+	//ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_OSC | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+ 	ROM_SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
   //ATTEMPT
   ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); 				//B
 	ROM_GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3);        	//pinMode(_rst, OUTPUT);
@@ -488,8 +488,13 @@ int main (void) {
 	ConfigureSSI();
 	begin();
   UARTprintf("Turning on now\n");
-  setup();
-
+  //setup();
+  lcdTestPattern();
+  ROM_SysCtlDelay(SysCtlClockGet()/6); //delay(500);
+  initHW();
+  setTextSize(1);
+  fillScreen(BLACK);
+  
     //Set up SysTick 
   ROM_SysTickPeriodSet(RELOAD_VALUE);  //When SysTick is written to, this is written in as the reload value
   ROM_SysTickIntDisable(); //Default SysTick interrupt just reloads SysTick
@@ -509,24 +514,15 @@ int main (void) {
   unsigned char timeoutBegin = false; //boolean
   char prevPress;
   char* currSet;
-  char set2[] = "abc";
-  char set3[] = "def";
-  char set4[] = "ghi";
-  char set5[] = "jkl";
-  char set6[] = "mno";
-  char set7[] = "pqrs";
-  char set8[] = "tuv";
-  char set9[] = "wxyz";
-  char set0[] = " ";
 
-  UARTprintf("Everything Loaded: should be displaying patterns.\n");
-	//float p = 3.1415926;
-	while(1)
+
+  while(1)
 	{
 		//ROM_SysCtlSleep();
-  
+    //UARTprintf("started: %c, ValueGet: %d", started, ROM_SysTickValueGet());
     if ((started == true) && (ROM_SysTickValueGet() < (RELOAD_VALUE - 2000000))) 
     {
+      //UARTprintf("I got in here yo");
       GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_7); 
       timesPressed++;
       
@@ -544,14 +540,14 @@ int main (void) {
 
       signalI--;      
 
-    int binIndex = 0;
-    int signalIndexTwo = 0;
+      int binIndex = 0;
+      int signalIndexTwo = 0;
   
-    int dValue = 0;
-    int binArray[50];
+      int dValue = 0;
+      int binArray[50];
       
-        for(int i = 0; i < 50; i++)
-          binArray[i] = -2;
+      for(int i = 0; i < 50; i++)
+        binArray[i] = -2;
 
         while(signalIndexTwo < 84)
         {
@@ -598,42 +594,53 @@ int main (void) {
           //Select the correct char array for currSet
           switch (currPress) {
             case '2':
-              currSet = set2;
+              //strcpy(currSet, set2); // = set2;
+              currSet = "abc";
               break;
             case '3':
-              currSet = set3;
+              //strcpy(currSet, set3);
+              currSet = "def";
               break;
             case '4':
-              currSet = set4;
+              //strcpy(currSet, set4);
+              currSet = "ghi";
               break;
             case '5':
-              currSet = set5;
+              //strcpy(currSet, set5);
+              currSet = "jkl";
               break;
             case '6':
-              currSet = set6;
+              //strcpy(currSet, set6);
+              currSet = "mno";
               break;
             case '7':
-              currSet = set7;
+              //strcpy(currSet, set7);
+              currSet = "pqrs";
               break;
             case '8':
-              currSet = set8;
+              //strcpy(currSet, set8);
+              currSet = "tuv";
               break;
             case '9':
-              currSet = set9;
+              //strcpy(currSet, set9);
+              currSet = "wxyz";
               break;
             case '0':
-              currSet = set0;
+              //strcpy(currSet, set0);
+              currSet = " ";
               break;
           }
-          char* death = "Death Does not Scare me";
-          UARTprintf("PREVPRESS: %c\n", prevPress);
-          testdrawtext(death, WHITE);
+					UARTprintf("CurrSet: %s", currSet);
+          //char* death = "Death Does not Scare me";
+          //UARTprintf("PREVPRESS: %c\n", prevPress);
+          //testdrawtext(death, WHITE);
           if (prevPress == '-') { //First keypress
             setInd = 0;
-            UARTprintf("Im the best\n");
             currChar = currSet[setInd];
-            drawChar (drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
-                  UARTprintf("%c", currChar);
+            writeChar1(currChar, BLACK, WHITE);
+						setCursor(drawX, drawY);
+						UARTprintf("Hanging?");
+            UARTprintf("%c", currChar);
             //timeoutBegin = true;
           }
           
@@ -650,21 +657,24 @@ int main (void) {
             
             //Update currChar and update it to the screen in WB
             currChar = currSet[setInd];
-            drawChar (drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
-            UARTprintf("%c", currChar);
+            writeChar1(currChar, BLACK, WHITE);
+            setCursor(drawX, drawY);
+						UARTprintf("%c", currChar);
             //Set timeoutBegin flag to begin timing for timeout
             //timeoutBegin = true;
           }
           else { //Otherwise, a different key was pressed, so set currChar in BW, and move the draw cursor
-            drawChar (drawX, drawY, currChar, BLACK, WHITE, CHARSIZE);
+            writeChar1(currChar, WHITE, BLACK);
             UARTprintf("%c", currChar);
             drawX += CHARX;
             drawY += CHARY;
             
             //Then draw newest keypress
+            setCursor(drawX, drawY);
             setInd = 0;
             currChar = currSet[setInd];
-            drawChar(drawX, drawY, currChar, WHITE, WHITE, CHARSIZE);
+            writeChar1(currChar,BLACK, WHITE);
+            setCursor(drawX, drawY);
             UARTprintf("%c", currChar);
           } 
         }
